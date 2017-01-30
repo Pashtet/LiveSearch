@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Поиск по осциллограммам!</title>
+    </head>
+
+    <body>
+        <form method="post">
+            <b>Что ищем?</b>
+            <table border ="0">
+                <tr>
+                    <td><input id="searchText" name="searchText" size="30" type="text" /></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+
+            </table>
+
+            <input id="getSearchReport" name="getSearchReport" type="button" value="Поиск" />
+        </form>
+        <div id="searchReport" class="outputTextArea"></div>
+
+
+            <script type="text/javascript" src="jquery-1.4.4.min.js"></script>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("#searchText").keyup(function () {//при опускании клавиши
+                        $searchText = $('#searchText').val();//занести в переменную значение ввода
+                        $.post("SearchServlet", {searchText: $searchText}, function (data) {// асинхронный запрос на сервер, callback функция дальше
+                            //alert(data);
+                            $("#searchReport").html(data);//изменить все содержимое id=weatherReport на data
+                        });
+                    });
+                });
+            </script>
+
+    </body>
+</html>
