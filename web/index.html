@@ -3,6 +3,23 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Поиск по осциллограммам!</title>
+        
+        <script type="text/javascript" src="jquery-1.4.4.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#searchText").keyup(function () {//при опускании клавиши
+                    $searchText = $('#searchText').val();//занести в переменную значение ввода
+                    $.post("SearchServlet", {searchText: $searchText}, function (data) {// асинхронный запрос на сервер, callback функция дальше
+                        //alert(data);
+                        $("#searchReport").html(data);//изменить все содержимое id=weatherReport на data
+                    });
+                });
+            });
+        </script>
+        
+        <script type="text/javascript">
+            
+        </script>
     </head>
 
     <body>
@@ -13,30 +30,13 @@
                     <td><input id="searchText" name="searchText" size="30" type="text" /></td>
                     <td><input id="getSearchReport" name="getSearchReport" type="button" value="Поиск" /></td>
                 </tr>
-                
                 <tr>
                     <td><div id="searchReport" class="outputTextArea"></div></td>
                 </tr>
-
             </table>
-
-            
         </form>
-       
 
-
-            <script type="text/javascript" src="jquery-1.4.4.min.js"></script>
-            <script type="text/javascript">
-                $(document).ready(function () {
-                    $("#searchText").keyup(function () {//при опускании клавиши
-                        $searchText = $('#searchText').val();//занести в переменную значение ввода
-                        $.post("SearchServlet", {searchText: $searchText}, function (data) {// асинхронный запрос на сервер, callback функция дальше
-                            //alert(data);
-                            $("#searchReport").html(data);//изменить все содержимое id=weatherReport на data
-                        });
-                    });
-                });
-            </script>
+        
 
     </body>
 </html>
