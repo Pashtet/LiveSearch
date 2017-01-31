@@ -18,20 +18,66 @@
         </script>
         
         <script type="text/javascript">
-            
+            var req;
+            function searchText() {
+                var search = document.getElementById("searchTextJS").value;//берем значение текста
+                //создаем объект ajaxa для разных браузеров разный
+                if (window.xmlHttpRequest) {
+                    req = new xmlHttpRequest();
+                } else if (window.ActiveXObject) {
+                    req = new ActiveXObject("Microsoft.XMLHttp");
+                }
+                var url = "SearchServlet";//адрес запроса
+                req.open("post", url, true);
+                req.onreadystatechange = callback;//функция обратного вызова
+                req.send({searchText:search});
+            }
+            function callback() {
+                if (req.readyState === 4) {//если ответ полностью получен
+                    var result = document.getElementById('searchReportJS');//в переменной объект DOM
+                    result.innerHTML = '';// очистка элемента
+                    var respText = req.responseText;
+                    alert(respText);
+                    if ((respText.length) !== 0) {
+                        var str = req.responseText.split("\n");
+                        var items;
+                        for (i = 0; i < str.length - 1; i++) {
+                            items = '<div';
+                            items += '>' + str[i] + '</div>';
+                            result.innerHTML += items;
+                        }
+                    } else
+                    {
+                        document.getElementById('result').innerHTML='';
+                    }
+                }
+            }
+            function focusIn() {
+                document.getElementById("searchTextJS").focus( );
+            }
         </script>
     </head>
 
     <body>
         <form method="post">
             <b>Что ищем?</b>
-            <table border ="0">
+            <table>
                 <tr>
                     <td><input id="searchText" name="searchText" size="30" type="text" /></td>
                     <td><input id="getSearchReport" name="getSearchReport" type="button" value="Поиск" /></td>
                 </tr>
                 <tr>
                     <td><div id="searchReport" class="outputTextArea"></div></td>
+                </tr>
+            </table>
+            
+            <table>
+                <tr>
+                    <td><input id="searchTextJS" name="searchTextJS" size="30" type="text" onkeyup="searchText()" /></td>
+                    <td><input id="getSearchReportJS" name="getSearchReportJS" type="button" value="Поиск JS" /></td>
+                </tr>
+                <tr>
+                    <td><div id="searchReportJS" class="outputTextArea"></div></td>
                 </tr>
             </table>
         </form>
