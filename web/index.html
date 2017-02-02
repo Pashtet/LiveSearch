@@ -3,8 +3,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Поиск по осциллограммам!</title>
-        
-        <script type="text/javascript" src="jquery-1.4.4.min.js"></script>
+
+        <!--<script type="text/javascript" src="jquery-1.4.4.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function () {
                 $("#searchText").keyup(function () {//при опускании клавиши
@@ -15,47 +15,7 @@
                     });
                 });
             });
-        </script>
-        
-        <script type="text/javascript">
-            var req;
-            function searchText() {
-                var search = document.getElementById("searchTextJS").value;//берем значение текста
-                //создаем объект ajaxa для разных браузеров разный
-                if (window.xmlHttpRequest) {
-                    req = new xmlHttpRequest();
-                } else if (window.ActiveXObject) {
-                    req = new ActiveXObject("Microsoft.XMLHttp");
-                }
-                var url = "SearchServlet";//адрес запроса
-                req.open("post", url, true);
-                req.onreadystatechange = callback;//функция обратного вызова
-                req.send({searchText:search});
-            }
-            function callback() {
-                if (req.readyState === 4) {//если ответ полностью получен
-                    var result = document.getElementById('searchReportJS');//в переменной объект DOM
-                    result.innerHTML = '';// очистка элемента
-                    var respText = req.responseText;
-                    alert(respText);
-                    if ((respText.length) !== 0) {
-                        var str = req.responseText.split("\n");
-                        var items;
-                        for (i = 0; i < str.length - 1; i++) {
-                            items = '<div';
-                            items += '>' + str[i] + '</div>';
-                            result.innerHTML += items;
-                        }
-                    } else
-                    {
-                        document.getElementById('result').innerHTML='';
-                    }
-                }
-            }
-            function focusIn() {
-                document.getElementById("searchTextJS").focus( );
-            }
-        </script>
+        </script>-->
     </head>
 
     <body>
@@ -63,26 +23,43 @@
             <b>Что ищем?</b>
             <table>
                 <tr>
-                    <td><input id="searchText" name="searchText" size="30" type="text" /></td>
-                    <td><input id="getSearchReport" name="getSearchReport" type="button" value="Поиск" /></td>
+                    <td><input id="searchText" name="searchText" size="30" type="text" onkeyup="searchText()"/></td>
+                    <td><input id="getSearchReport" name="getSearchReport" type="button" value="Поиск" onclick="searchText()" /></td>
                 </tr>
                 <tr>
-                    <td><div id="searchReport" class="outputTextArea"></div></td>
-                </tr>
-            </table>
-            
-            <table>
-                <tr>
-                    <td><input id="searchTextJS" name="searchTextJS" size="30" type="text" onkeyup="searchText()" /></td>
-                    <td><input id="getSearchReportJS" name="getSearchReportJS" type="button" value="Поиск JS" /></td>
-                </tr>
-                <tr>
-                    <td><div id="searchReportJS" class="outputTextArea"></div></td>
+                    <td><div id="searchReport" class="outputTextArea" ></div></td>
                 </tr>
             </table>
         </form>
+        <a href="newhtml.html">New</a>
+        <script type="text/javascript">
+            var req;
+            function searchText() {
+                alert("Запускаем запрос Ajax!");
+                var search = document.getElementById("searchText").value;//берем значение текста
+                req = new xmlHttpRequest();
+                var url = "SearchServlet";//адрес запроса
+                req.open("post", "SearchServlet", true);
+                req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                req.onreadystatechange = callback;//функция обратного вызова
+                //var params = 'searchText=' + encodeURIComponent(search);
+                req.send(params);
+            }
 
-        
+            function callback() {
+                if (req.readyState === 4) {//если ответ полностью получен
+                    alert("Ответ получен");
+                    var result = document.getElementById('searchReport');//в переменной объект DOM
+                    result.innerHTML = '';// очистка элемента
+                    var respText = req.responseText;
+                    alert(respText);
+                    result.innerHTML = respText;
+                }
+            }
 
+            function focusIn() {
+                document.getElementById("searchTextJS").focus();
+            }
+        </script>
     </body>
 </html>
