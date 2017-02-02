@@ -16,40 +16,15 @@
                 });
             });
         </script>-->
-    </head>
-
-    <body>
-        <table>
-            <tr>
-                <td><input type="text" name="searchText" id="searchText" onkeyup="searchText()"></td>
-            </tr>
-        </table>
-        <input type="text" name="searchText" id="searchText" onkeyup="searchText()">
-        <form>
-            <b>Что ищем?</b>
-            <table>
-                <tr>
-                    <td><input type="text" name="searchText" id="searchText" onkeyup="searchText()"></td>
-                    <td><input id="getSearchReport" name="getSearchReport" type="button" value="Поиск" onclick="searchText()" /></td>
-                </tr>
-                <tr>
-                    <td><div id="searchReport"></div></td>
-                </tr>
-            </table>
-        </form>
-        <a href="newhtml.html">New</a>
         <script type="text/javascript">
             var req;
             function searchText() {
-                alert("Запускаем запрос Ajax!");
                 var search = document.getElementById("searchText").value;//берем значение текста
-                req = new xmlHttpRequest();
+                req = new XMLHttpRequest();
                 var url = "SearchServlet";//адрес запроса
                 req.open("post", "SearchServlet", true);
-                req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 req.onreadystatechange = callback;//функция обратного вызова
-                //var params = 'searchText=' + encodeURIComponent(search);
-                req.send(params);
+                req.send({searchText: search});
             }
 
             function callback() {
@@ -67,5 +42,18 @@
                 document.getElementById("searchTextJS").focus();
             }
         </script>
+    </head>
+
+    <body>
+        <b>Что ищем?</b>
+            <table>
+                <tr>
+                    <td><input type="text" name="searchText" id="searchText" onkeyup="searchText()"></td>
+                </tr>
+                <tr>
+                    <td><div id="searchReport"></div></td>
+                </tr>
+            </table>
+        <input id="getSearchReport" name="getSearchReport" type="submit" value="Поиск" />
     </body>
 </html>
