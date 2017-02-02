@@ -22,38 +22,41 @@
                 var search = document.getElementById("searchText").value;//берем значение текста
                 req = new XMLHttpRequest();
                 var url = "SearchServlet";//адрес запроса
-                req.open("post", "SearchServlet", true);
+                req.open('POST', 'SearchServlet', true);
+                req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 req.onreadystatechange = callback;//функция обратного вызова
+                var params = 'searchText' + encodeURIComponent(search);
+                // var formData = new FormData(document.forms.);
                 req.send({searchText: search});
             }
 
             function callback() {
                 if (req.readyState === 4) {//если ответ полностью получен
-                    alert("Ответ получен");
+                    //alert("Ответ получен");
                     var result = document.getElementById('searchReport');//в переменной объект DOM
                     result.innerHTML = '';// очистка элемента
                     var respText = req.responseText;
-                    alert(respText);
+                    //alert(respText);
                     result.innerHTML = respText;
                 }
-            }
-
-            function focusIn() {
-                document.getElementById("searchTextJS").focus();
             }
         </script>
     </head>
 
     <body>
         <b>Что ищем?</b>
+        
+        <form action="">
             <table>
                 <tr>
-                    <td><input type="text" name="searchText" id="searchText" onkeyup="searchText()"></td>
+                    <td><input type="text" id="searchText" onkeyup=searchText()></td>
                 </tr>
                 <tr>
                     <td><div id="searchReport"></div></td>
                 </tr>
             </table>
-        <input id="getSearchReport" name="getSearchReport" type="submit" value="Поиск" />
+            <input id="searchText" name="getSearchReport" type="submit" value="Поиск" />
+        </form>
+
     </body>
 </html>
