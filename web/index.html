@@ -2,7 +2,35 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="style.css"/>
         <title>Поиск по осциллограммам!</title>
+        <style type="text/css">
+            .AutoComplete {
+                position: relative;
+                width: 200px;
+            }
+            .AutoComplete > * {
+                width: 100%;
+            }
+            .AutoComplete > ul {
+                background: #FFF;
+                border-radius: 10px;
+                box-shadow: 0 0 10px #000;
+                display: none;
+                margin: 5px 0 0 0;
+                padding: 5px 0;
+                position: absolute;
+            }
+            .AutoComplete li {
+                display: block;
+                padding: 0 5px;
+            }
+            .AutoComplete li:hover {
+                background: #AAA;
+                cursor: pointer;
+            }
+        </style>
+
     </head>
 
     <body>
@@ -39,6 +67,45 @@
                 $('#searchText').val($(this).text());
             });
         </script>
+        <div class="AutoComplete">
+            <input type="text" />
+            <ul></ul>
+        </div>
+
+        <script type="text/javascript">
+            window.onload = function () {
+                var data = ['Арбуз', 'Арба', 'Арбалет', 'Апельсин', 'Ананас', 'Банан', 'Виноград', 'Вишня'],
+                        input = document.querySelector('.AutoComplete > input'),
+                        list = input.nextElementSibling;
+                input['oninput' in input ? 'oninput' : 'onpropertychange'] = function () {
+                    var li,
+                            val = this.value.toLowerCase()
+                            .split(' ')
+                            .pop();
+                    if (val.length < 3)
+                        list.style.display = 'none';
+                    else {
+                        list.innerHTML = '';
+                        data.forEach(function (i) {
+                            var reg = new RegExp('^' + val, 'i');
+                            if (reg.test(i)) {
+                                li = document.createElement('li');
+                                li.appendChild(document.createTextNode(i))
+                                li.onclick = function () {
+                                    input.value = input.value.replace(/\S+$/, i);
+                                    input.focus();
+                                    list.innerHTML = '';
+                                    list.style.display = 'none';
+                                };
+                                list.appendChild(li);
+                                list.style.display = 'block'
+                            }
+                        });
+                    }
+                }
+            }
+        </script>
+
     </body>
 </html>
 
