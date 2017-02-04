@@ -7,31 +7,38 @@
 
     <body>
         <form method="post">
-            <p>Проверка изменений на гитхабе</p>
             <b>Что ищем?</b>
-            <table border ="0">
-                <tr>
-                    <td><input id="searchText" name="searchText" size="30" type="text" /></td>
-                    <td><input id="getSearchReport" name="getSearchReport" type="button" value="Поиск" /></td>
-                </tr>
-                
-                <tr>
-                    <td><div id="searchReport" class="outputTextArea"></div></td>
-                </tr>
-            </table>
+            <p>
+                <input type="text" id="searchText" name="searchText" size="30" />
+                <input type="button" id="getSearchReport" name="getSearchReport"  value="Поиск" />
+            </p>
+
+            <div id="searchAdviceWrapper"></div>
+            <div id="searchReport"></div>
         </form>
-        
-            <script type="text/javascript" src="jquery-1.4.4.min.js"></script>
-            <script type="text/javascript">
-                $(document).ready(function () {
-                    $("#searchText").keyup(function () {//при опускании клавиши
-                        $searchText = $('#searchText').val();//занести в переменную значение ввода
-                        $.post("SearchServlet", {searchText: $searchText}, function (data) {// асинхронный запрос на сервер, callback функция дальше
+
+        <script type="text/javascript" src="jquery-1.4.4.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#searchText").keyup(function () {//при опускании клавиши
+                    if ($(this).val().length >= 2) { //если длина строки больше 2
+                        $.post("SearchServlet", {'searchText': $(this).val()}, function (data) {
+                            data = JSON.parse(data); //json data array string
                             //alert(data);
-                            $("#searchReport").html(data);//изменить все содержимое id=weatherReport на data
+                            if (data.length != undefined && data.length > 0) {
+                                $("#searchAdviceWrapper").html('');
+                                for (i in data) {
+                                    $("#searchAdviceWrapper").append('<div class="adviceVariant">' + data[i] + '</div>');
+                                }
+                            }
                         });
-                    });
+                    }
                 });
-            </script>
+            });
+            $('.adviceVariant').live('click', function () {
+                $('#searchText').val($(this).text());
+            });
+        </script>
     </body>
 </html>
+
