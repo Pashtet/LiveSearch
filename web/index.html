@@ -68,41 +68,60 @@
             });
         </script>
         <div class="AutoComplete">
-            <input type="text" />
+            <input type="text" id="searchText1" />
             <ul></ul>
         </div>
 
         <script type="text/javascript">
+            var data1;
             window.onload = function () {
-                var data = ['Арбуз', 'Арба', 'Арбалет', 'Апельсин', 'Ананас', 'Банан', 'Виноград', 'Вишня'],
-                        input = document.querySelector('.AutoComplete > input'),
+
+                var input = document.querySelector('.AutoComplete > input'),
                         list = input.nextElementSibling;
-                input['oninput' in input ? 'oninput' : 'onpropertychange'] = function () {
-                    var li,
-                            val = this.value.toLowerCase()
-                            .split(' ')
-                            .pop();
-                    if (val.length < 3)
-                        list.style.display = 'none';
-                    else {
-                        list.innerHTML = '';
-                        data.forEach(function (i) {
-                            var reg = new RegExp('^' + val, 'i');
-                            if (reg.test(i)) {
-                                li = document.createElement('li');
-                                li.appendChild(document.createTextNode(i))
-                                li.onclick = function () {
-                                    input.value = input.value.replace(/\S+$/, i);
-                                    input.focus();
-                                    list.innerHTML = '';
+
+                $("#searchText1").keyup(function () {//при опускании клавиши
+                    if ($(this).val().length >= 2) { //если длина строки больше 2
+                        $.post("SearchServlet", {'searchText': $(this).val()}, function (data) {
+                            data = JSON.parse(data); //json data array string
+                            data1 = data;
+                            console.log(data);
+                            //alert(data);
+                            if (data.length != undefined && data.length > 0) {
+                                //$("#searchAdviceWrapper").html('');
+                                //for (i in data) {
+                                //    $("#searchAdviceWrapper").append('<div class="adviceVariant">' + data[i] + '</div>');
+                                //}
+
+                                var li,
+                                        val = this.value.toLowerCase()
+                                        .split(' ')
+                                        .pop();
+                                if (val.length <= 1)
                                     list.style.display = 'none';
-                                };
-                                list.appendChild(li);
-                                list.style.display = 'block'
+                                else {
+                                    list.innerHTML = '';
+                                    console.log(data1);
+                                    data1.forEach(function (i) {
+                                        var reg = new RegExp('^' + val, 'i');
+                                        if (reg.test(i)) {
+                                            li = document.createElement('li');
+                                            li.appendChild(document.createTextNode(i))
+                                            li.onclick = function () {
+                                                input.value = input.value.replace(/\S+$/, i);
+                                                input.focus();
+                                                list.innerHTML = '';
+                                                list.style.display = 'none';
+                                            };
+                                            list.appendChild(li);
+                                            list.style.display = 'block'
+                                        }
+                                    });
+                                }
                             }
                         });
                     }
-                }
+
+                });
             }
         </script>
 
