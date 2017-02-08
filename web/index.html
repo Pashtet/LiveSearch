@@ -5,68 +5,20 @@
         <link rel="stylesheet" href="style.css"/>
         <title>Поиск по осциллограммам!</title>
         <link rel="stylesheet" href="style.css">
+        <script type="text/javascript" src="jquery-1.4.4.min.js"></script>
+        <script type="text/javascript" src="search.js"></script>
     </head>
 
     <body>
         <form method="post">
             <b>Что ищем?</b>
             <div class="AutoComplete">
-                <input type="text" id="searchText" name="searchText" size="30" />
+                <input type="text" autocomplete="off" id="searchText" name="searchText" size="30" />
                 <ul></ul>
             </div>
+            <input type="date" name="created" id="dateForSearch">
             <input type="button" id="getSearchReport" name="getSearchReport"  value="Поиск" />
-        </form>
-
-        <script type="text/javascript" src="jquery-1.4.4.min.js"></script>
-
-        <script type="text/javascript">
-            window.onload = function () {
-                // var data = ['Арбуз', 'Арба', 'Арбалет', 'Апельсин', 'Ананас', 'Банан', 'Виноград', 'Вишня'],
-                var input = document.querySelector('.AutoComplete > input'), //поиск по модели DOM по Css селектору
-                        list = input.nextElementSibling;//следующий сосед-элемент
-                input['oninput' in input ? 'oninput' : 'onpropertychange'] = function () {
-                    var li,
-                            val = this.value.toLowerCase()
-                            .split(' ')
-                            .pop();
-                    if (val.length < 2)
-                        list.style.display = 'none';
-                    else {////
-                        console.log(this.value);
-                        $.post("SearchServlet", {'searchText': this.value}, function (data) {
-                            console.log("Пришли Json " + data);
-                            data = JSON.parse(data); //json data array string
-                            console.log("Переведенные в массив " + data);
-                            if (data.length != undefined && data.length > 0) {
-                                list.innerHTML = '';
-                            data.forEach(function (i) {
-                                console.log("В функции " + i);
-                               // var reg = new RegExp('^' + val, 'i');
-                               // if (reg.test(i)) {
-                                    console.log("В функции RegExp " + i);
-                                    li = document.createElement('li');
-                                    li.appendChild(document.createTextNode(i))
-                                    li.onclick = function () {
-                                        input.value = input.value.replace(/\S+$/, i);
-                                        input.focus();
-                                        list.innerHTML = '';
-                                        list.style.display = 'none';
-                                    };
-                                    list.appendChild(li);
-                                    list.style.display = 'block'
-                                //}
-                            });
-                            }
-                            
-                        });
-
-
-                    }////
-                }
-            }
-        </script>
-
-
+        </form>      
     </body>
 </html>
 

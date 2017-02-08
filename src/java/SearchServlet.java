@@ -51,7 +51,7 @@ public class SearchServlet extends HttpServlet {
         Connection conn = null;
         Statement st = null;
         ResultSet res = null;
-        String finalSearch = "[\"";
+        String finalSearch = "";
         if (searchText.length() >= 2) {
             try {
                 conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/files", "netbeans", "netbeans");
@@ -60,18 +60,20 @@ public class SearchServlet extends HttpServlet {
                 String s = "SELECT * FROM ps WHERE ps_name LIKE 'ПС_" + searchText + "%';";
 
                 res = st.executeQuery(s);
+                finalSearch+= "[\"";
                 while (res.next()) {
                     if (finalSearch.length()>2)
                         finalSearch+=",";
                     String un = res.getString("ps_name");
                     finalSearch += un;
                 }
+                finalSearch +="\"]";
                 st.close();
                 conn.close();
             } catch (SQLException sqlEx) {
                 sqlEx.printStackTrace();
             }
-            finalSearch +="\"]";
+            
             return finalSearch;
         }
         return "";//new String (finalSearch.getBytes(), "CP1251");
