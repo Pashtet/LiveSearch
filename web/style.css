@@ -7,4 +7,28 @@ and open the template in the editor.
     Created on : Feb 4, 2017, 11:28:00 PM
     Author     : Pashtet
 */
+.AutoComplete {/*класс*/
+    position: relative;
+    width: 200px;
+}
+.AutoComplete > * { /* ко всем непосредственным потомкам*/
+    width: 100%;
+}
+.AutoComplete > ul {/*непосредственные потомки ul*/
+    background: #FFF;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #000;
+    display: none;
+    margin: 5px 0 0 0;
+    padding: 5px 0;
+    position: absolute;
+}
+.AutoComplete li { /*потомки любые класса*/
+    display: block;
+    padding: 0 5px;
+}
+.AutoComplete li:hover {/*потомки под мышью*/
+    background: #AAA;
+    cursor: pointer;
+}
 

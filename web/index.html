@@ -4,33 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="style.css"/>
         <title>Поиск по осциллограммам!</title>
-        <style type="text/css">
-            .AutoComplete {
-                position: relative;
-                width: 200px;
-            }
-            .AutoComplete > * {
-                width: 100%;
-            }
-            .AutoComplete > ul {
-                background: #FFF;
-                border-radius: 10px;
-                box-shadow: 0 0 10px #000;
-                display: none;
-                margin: 5px 0 0 0;
-                padding: 5px 0;
-                position: absolute;
-            }
-            .AutoComplete li {
-                display: block;
-                padding: 0 5px;
-            }
-            .AutoComplete li:hover {
-                background: #AAA;
-                cursor: pointer;
-            }
-        </style>
-
+        <link rel="stylesheet" href="style.css">
     </head>
 
     <body>
@@ -73,57 +47,39 @@
         </div>
 
         <script type="text/javascript">
-            var data1;
             window.onload = function () {
-
-                var input = document.querySelector('.AutoComplete > input'),
+                var data = ['Арбуз', 'Арба', 'Арбалет', 'Апельсин', 'Ананас', 'Банан', 'Виноград', 'Вишня'],
+                        input = document.querySelector('.AutoComplete > input'),
                         list = input.nextElementSibling;
-
-                $("#searchText1").keyup(function () {//при опускании клавиши
-                    if ($(this).val().length >= 2) { //если длина строки больше 2
-                        $.post("SearchServlet", {'searchText': $(this).val()}, function (data) {
-                            data = JSON.parse(data); //json data array string
-                            data1 = data;
-                            console.log(data);
-                            //alert(data);
-                            if (data.length != undefined && data.length > 0) {
-                                //$("#searchAdviceWrapper").html('');
-                                //for (i in data) {
-                                //    $("#searchAdviceWrapper").append('<div class="adviceVariant">' + data[i] + '</div>');
-                                //}
-
-                                var li,
-                                        val = this.value.toLowerCase()
-                                        .split(' ')
-                                        .pop();
-                                if (val.length <= 1)
-                                    list.style.display = 'none';
-                                else {
+                input['oninput' in input ? 'oninput' : 'onpropertychange'] = function () {
+                    var li,
+                            val = this.value.toLowerCase()
+                            .split(' ')
+                            .pop();
+                    if (val.length < 3)
+                        list.style.display = 'none';
+                    else {
+                        list.innerHTML = '';
+                        data.forEach(function (i) {
+                            var reg = new RegExp('^' + val, 'i');
+                            if (reg.test(i)) {
+                                li = document.createElement('li');
+                                li.appendChild(document.createTextNode(i))
+                                li.onclick = function () {
+                                    input.value = input.value.replace(/\S+$/, i);
+                                    input.focus();
                                     list.innerHTML = '';
-                                    console.log(data1);
-                                    data1.forEach(function (i) {
-                                        var reg = new RegExp('^' + val, 'i');
-                                        if (reg.test(i)) {
-                                            li = document.createElement('li');
-                                            li.appendChild(document.createTextNode(i))
-                                            li.onclick = function () {
-                                                input.value = input.value.replace(/\S+$/, i);
-                                                input.focus();
-                                                list.innerHTML = '';
-                                                list.style.display = 'none';
-                                            };
-                                            list.appendChild(li);
-                                            list.style.display = 'block'
-                                        }
-                                    });
-                                }
+                                    list.style.display = 'none';
+                                };
+                                list.appendChild(li);
+                                list.style.display = 'block'
                             }
                         });
                     }
-
-                });
+                }
             }
         </script>
+
 
     </body>
 </html>
