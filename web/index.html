@@ -10,15 +10,14 @@
     </head>
 
     <body>
-        <form method="post">
             <b>Что ищем?</b>
             <div class="AutoComplete">
                 <input type="text" autocomplete="off" id="searchText" name="searchText" size="30" />
                 <ul></ul>
             </div>
-            <input type="date" name="created" id="dateForSearch">
-            <input type="button" id="getSearchReport" name="getSearchReport"  value="Поиск" />
-        </form>      
+            <input type="date" name="searchDate" id="searchDate">
+            <input type="button" id="sendSearchRequest" name="sendSearchRequest"  value="Поиск" />
+            <div class="SearchResult"></div>
     </body>
 </html>
 
