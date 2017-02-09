@@ -16,11 +16,11 @@ import java.util.logging.Logger;
  * @author veerasundar.com/blog
  *
  */
-public class SearchServlet extends HttpServlet {
+public class LiveSearch extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    public SearchServlet() {
+    public LiveSearch() {
 
         super();
     }
@@ -36,18 +36,18 @@ public class SearchServlet extends HttpServlet {
         try {
             String searchText = request.getParameter("searchText");
             searchText = new String(searchText.getBytes("ISO-8859-1"), "UTF-8");
-            String report = getWeather(searchText);
+            String report = getLiveSearch(searchText);
             response.setContentType("text/plain;charset=utf-8");
             PrintWriter out = response.getWriter();
             out.println("" + report + "");
             out.flush();
             out.close();
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LiveSearch.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private String getWeather(String searchText) throws ClassNotFoundException, UnsupportedEncodingException {
+    private String getLiveSearch(String searchText) throws ClassNotFoundException, UnsupportedEncodingException {
         Connection conn = null;
         Statement st = null;
         ResultSet res = null;
