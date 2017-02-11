@@ -43,7 +43,7 @@ public class GetSearchResponse extends HttpServlet {
             String searchDate = request.getParameter("searchDate");
             searchDate = new String(searchDate.getBytes("ISO-8859-1"), "UTF-8");
             String report = doRequestToDb(searchText, searchDate);
-            out.println(searchText + " " + searchDate);
+            //out.println(searchText + " " + searchDate);
             out.println("" + report + "");
 
         }
@@ -58,19 +58,16 @@ public class GetSearchResponse extends HttpServlet {
 
         String s = "SELECT ps.ps_name, mf.mf_name, event.event_date, event.dev_name, event.file_name "
                 + "FROM ps, mf, event "
-                + "WHERE ps.ps_name='" + searchText + "' "
+                + "WHERE ps.ps_name ILIKE 'ПС_" + searchText + "%' "
                 + "AND event.event_date='" + searchDate + "' "
                 + "AND ps.ps_id=mf.ps_id "
                 + "AND mf.mf_id=event.mf_id "
                 + ";";
         
         res = st.executeQuery(s);
-        finalSearch += "[\n";
+        finalSearch += "[";
 
         while (res.next()) {
-//                if (finalSearch.length() > 2) {
-//                    finalSearch += ",\n\r";
-//                }
             finalSearch += "[";
             finalSearch += "\"" + res.getString(1) + "\"";
             finalSearch += ",";
@@ -81,10 +78,9 @@ public class GetSearchResponse extends HttpServlet {
             finalSearch += "\"" + res.getString(4) + "\"";
             finalSearch += ",";
             finalSearch += "\"" + res.getString(5) + "\"";
-            finalSearch += "]\n";
-
+            finalSearch += "],";
         }
-
+        finalSearch = finalSearch.substring(0, (finalSearch.length()-1));
         finalSearch += "]";
         st.close();
         conn.close();

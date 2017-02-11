@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+            <title>Подсказка в строке поиска</title>
+            <script type='text/javascript'>
+
+                // Список стран
+                data = ['Абхазия', 'Австралия', 'Австрия', 'Азербайджан', 'Азорские острова', 'Аландские острова', 'Албания', 'Алжир', 'Американское Самоа', 'Ангилья',
+                    'Ангола', 'Андорра', 'Антигуа и Барбуда', 'Аомынь', 'Аргентина', 'Армения', 'Аруба', 'Афганистан', 'Багамы', 'Бангладеш', 'Барбадос', 'Бахрейн', 'Белоруссия', 'Белиз',
+                    'Бельгия', 'Бенин', 'Бермуды', 'Болгария', 'Боливия', 'Босния и Герцеговина', 'Ботсвана', 'Бразилия', 'Британская территория в Индийском океане', 'Бруней',
+                    'Буркина Фасо', 'Бурунди', 'Бутан', 'Вануату', 'Ватикан', 'Великобритания', 'Венгрия', 'Венесуэла', 'Британские Виргинские острова', 'Американские Виргинские острова',
+                    'Восточный Тимор', 'Вьетнам', 'Габон', 'Гавайи', 'Гаити', 'Гайана', 'Гамбия', 'Гана', 'Гваделупа', 'Гватемала', 'Гвинея', 'Гвинея-Бисау', 'Германия', 'Гернси', 'Гибралтар',
+                    'Гондурас', 'Гонконг', 'Гренада', 'Гренландия', 'Греция', 'Грузия', 'Гуам', 'Дания', 'Джерси', 'Джибути', 'Доминика', 'Доминиканская Республика', 'Египет', 'Замбия', 'Зимбабве',
+                    'Израиль', 'Индия', 'Индонезия', 'Иордания', 'Ирак', 'Иран', 'Ирландия', 'Исландия', 'Испания', 'Италия', 'Йемен', 'Кабо-Верде', 'Казахстан', 'Каймановы острова', 'Камбоджа',
+                    'Камерун', 'Канада', 'Канарские острова', 'Катар', 'Кения', 'Кипр', 'Киргизия', 'Кирибати', 'КНР', 'Китайская Республика', 'Кокосовые острова', 'Колумбия', 'Коморы',
+                    'Республика Конго', 'ДР Конго', 'КНДР', 'Республика Корея', 'Республика Косово', 'Коста-Рика', 'Кот-д’Ивуар', 'Куба', 'Кувейт', 'Острова Кука', 'Кюрасао', 'Лаос',
+                    'Латвия', 'Лесото', 'Либерия', 'Ливан', 'Ливия', 'Литва', 'Лихтенштейн', 'Люксембург', 'Маврикий', 'Мавритания', 'Мадагаскар', 'Мадейра', 'Майотта', 'Республика Македония',
+                    'Малави', 'Малайзия', 'Мали', 'Мальдивы', 'Мальта', 'Марокко', 'Мартиника', 'Маршалловы Острова', 'Мексика', 'Мелилья', 'Микронезия', 'Мозамбик', 'Молдавия', 'Монако', 'Монголия',
+                    'Монтсеррат', 'Мьянма', 'Остров Мэн', 'Нагорно-Карабахская Республика', 'Намибия', 'Науру', 'Непал', 'Нигер', 'Нигерия', 'Нидерланды', 'Никарагуа', 'Ниуэ', 'Новая Зеландия',
+                    'Новая Каледония', 'Норвегия', 'Остров Норфолк', 'ОАЭ', 'Оман', 'Пакистан', 'Палау', 'Палестина', 'Панама', 'Папуа — Новая Гвинея', 'Парагвай', 'Перу', 'Острова Питкэрн',
+                    'Польша', 'Португалия', 'Приднестровская Молдавская Республика', 'Пуэрто-Рико', 'Реюньон', 'Остров Рождества', 'Россия', 'Руанда', 'Румыния', 'Сальвадор', 'Самоа',
+                    'Сан-Марино', 'Сан-Томе и Принсипи', 'Сахарская Арабская Демократическая Республика', 'Саудовская Аравия', 'Свазиленд', 'Остров Святой Елены', 'Северные Марианские острова',
+                    'Турецкая Республика Северного Кипра', 'Сейшельские Острова', 'Сенегал', 'Сен-Мартен', 'Сен-Пьер и Микело', 'Сент-Винсент и Гренадины', 'Сент-Китс и Невис',
+                    'Сент-Люсия', 'Сербия', 'Сеута', 'Силенд', 'Синт-Маартен', 'Сингапур', 'Сирия', 'Словакия', 'Словения', 'США', 'Соломоновы Острова', 'Сомали', 'Сомалиленд', 'Судан', 'Суринам',
+                    'Сьерра-Леоне', 'Таджикистан', 'Таиланд', 'Танзания', 'Тёркс и Кайкос', 'Того', 'Токелау', 'Тонга', 'Тринидад и Тобаго', 'Тувалу', 'Тунис', 'Туркмения', 'Турция', 'Уганда',
+                    'Узбекистан', 'Украина', 'Уоллис и Футуна', 'Уругвай', 'Фарерские острова', 'Фиджи', 'Филиппины', 'Финляндия', 'Фолклендские острова', 'Франция', 'Французская Гвиана',
+                    'Французская Полинезия', 'Французские Южные и Антарктические Территории', 'Хорватия', 'ЦАР', 'Чад', 'Черногория', 'Чехия', 'Чили', 'Швейцария', 'Швеция', 'Шпицберген',
+                    'Шри-Ланка', 'Эквадор', 'Экваториальная Гвинея', 'Эритрея', 'Эстония', 'Эфиопия', 'Южная Георгия и Южные Сандвичевы острова', 'Южная Осетия', 'ЮАР', 'Южный Судан',
+                    'Ямайка', 'Япония'];
+
+                //Номер активного элемента в списке подсказок
+                numActiveItem = 0;
+
+                //Количество элементов в списке подсказок
+                countItemsListHelp = 0;
+
+                // Создание списка подсказок
+                function createHelpList(event) {
+                    var event = event || window.event;
+                    var key = event.keyCode || event.charCode;
+                    var target = event.target || event.srcElement;
+                    var len_key_words = target.value.length;
+                    var reg = new RegExp("^" + target.value + ".*$", "i");
+                    counter = 0;
+
+                    // Нажат Enter
+                    if (key == 13)
+                    {
+                        document.getElementById("select_list").style.display = 'none';
+                    }
+
+                    /* Перебор подсказок */
+                    else if (key == 40 || key == 38 && countItemsListHelp != 0)//если нажаты клавиши вниз/вверх и число найденных подсказок не 0
+                    {
+
+                        if (key == 40)
+                            numActiveItem++;
+                        else
+                            numActiveItem--;
+
+                        if (numActiveItem > countItemsListHelp)
+                            numActiveItem = 1;
+                        else if (numActiveItem < 1)
+                            numActiveItem = countItemsListHelp;
+
+                        //пройтись по всем элементам и выделить внешне выбранный и подставить его значение в поле ввода
+                        for (i = 0; i < document.getElementById('select_list').childNodes.length; i++)
+                        {
+                            if (document.getElementById('select_list').childNodes[i].nodeType == 1)
+                            {
+                                counter++;
+                                document.getElementById('select_list').childNodes[i].style.background = '#ffffff';
+                                if (counter == numActiveItem)
+                                {
+                                    document.getElementById('select_list').childNodes[i].style.background = '#fdedaf';
+                                    document.getElementById('search_field').value = document.getElementById('select_list').childNodes[i].getElementsByTagName('span')[0].innerHTML;
+                                }
+                            }
+                        }
+                    }
+
+                    /* Поиск и вывод подсказок */
+                    else if (len_key_words && key != 37 && key != 39)//если не нажат ентер и число подсказок 0 и введен хоть один символ и не нажата клавиша влево или вправоч  
+                    {
+                        numActiveItem = 0;
+                        document.getElementById('select_list').style.display = 'none';
+                        code = '';
+                        for (i = 0; i < data.length; i++)
+                            if (reg.exec(data[i].substr(0, len_key_words)) != null)//хитрое сравнение со строками в массиве
+                            {
+                                code += "<li><span  style='display: none;'>" + data[i] + "</span><strong>" + data[i].substr(0, len_key_words) + "</strong><span style='color: #b4b3b3'>" + data[i].substr(len_key_words) + "</span></li>";
+                                //если похоже то добавляем элемент пол
+                                counter++;
+                            }
+                        if (counter)
+                        {
+                            countItemsListHelp = counter;
+                            document.getElementById('select_list').innerHTML = code;
+                            document.getElementById('select_list').style.display = 'block';
+                        }
+                    }
+                    /* Если поле пустое - скрываем*/
+                    else if (!len_key_words)
+                    {
+                        document.getElementById('select_list').style.display = 'none';
+                    }
+                }
+
+                function selectHelp(ev) {
+                    var event = ev || window.event;
+                    var target = event.target || event.srcElement;
+                    document.getElementById('search_field').value = target.getElementsByTagName('span')[0].innerHTML;
+                    document.getElementById('select_list').style.display = 'none';
+                }
+            </script>
+
+
+            
+
+    </head>
+
+
+    <body onclick='document.getElementById("select_list").style.display = "none"'>
+
+        <div id='container'>
+            <input type='text'  onkeyup='createHelpList(event)'  id='search_field' onmousedown='this.style.border = "1px solid #cccccc"' onclick='event.cancelBubble ? event.cancelBubble = true : event.stopPropagation();'/>
+            <ul id='select_list' onclick='selectHelp(event)'>
+            </ul>
+        </div>
+    </body>
+
+</html>
