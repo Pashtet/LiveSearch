@@ -9,16 +9,19 @@
         <script type="text/javascript" src="search.js"></script>
     </head>
 
-    <body>
-            <b>Что ищем?</b>
-            <div class="AutoComplete">
-                <input type="text" autocomplete="off" id="searchText" value="Енюково" name="searchText" size="30" />
-                <ul></ul>
-            </div>
+    <body onclick='document.getElementById("selectList").style.display = "none"'>
+        <b>Что ищем?</b>
+        <div id="containerText">
+            <input type="text" onkeyup="createHelpList(event)" autocomplete="off"  id='searchText' onmousedown='this.style.border = "1px solid #cccccc"' onclick='event.cancelBubble ? event.cancelBubble = true : event.stopPropagation();' value="Енюково"/>
+            <ul id='selectList' onclick="selectHelp(event)"></ul>
+        </div>
+        <div id="containerDate">
             <input type="date" name="searchDate" id="searchDate" value="2015-11-24">
-            <input type="button" id="sendSearchRequest" name="sendSearchRequest"  value="Поиск" />
-            <div id="searchResult">
-            </div>
+            <input type="button" onclick="sendSearchRequest()" id="sendSearchRequest" name="sendSearchRequest"  value="Поиск" />
+        </div>
+        <div id="searchResult">
+        </div>
+        <a href="1.html"> Пример выпадающего списка</a>
     </body>
 </html>
 

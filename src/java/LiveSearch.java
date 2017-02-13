@@ -52,7 +52,6 @@ public class LiveSearch extends HttpServlet {
         Statement st = null;
         ResultSet res = null;
         String finalSearch = "";
-        if (searchText.length() >= 2) {
             try {
                 conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/files", "netbeans", "netbeans");
                 st = conn.createStatement();
@@ -64,7 +63,7 @@ public class LiveSearch extends HttpServlet {
                 while (res.next()) {
                     System.out.println(finalSearch);
                     if (finalSearch.length() > 2) {
-                        finalSearch += ",";
+                        finalSearch += " \", \"";
                     }
                     String un = res.getString("ps_name");
                     System.out.println(un);
@@ -83,8 +82,6 @@ public class LiveSearch extends HttpServlet {
             }
 
             return finalSearch;
-        }
-        return "";//new String (finalSearch.getBytes(), "CP1251");
     }
 
 }
