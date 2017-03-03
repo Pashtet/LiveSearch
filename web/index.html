@@ -10,17 +10,39 @@
     </head>
 
     <body onclick='document.getElementById("selectList").style.display = "none"'>
-        <b>Что ищем?</b>
-        <div id="containerText">
-            <input type="text" onkeyup="createHelpList(event)" autocomplete="off"  id='searchText' onmousedown='this.style.border = "1px solid #cccccc"' onclick='event.cancelBubble ? event.cancelBubble = true : event.stopPropagation();' value="Енюково"/>
-            <ul id='selectList' onclick="selectHelp(event)"></ul>
-        </div>
-        <div id="containerDate">
-            <input type="date" name="searchDate" id="searchDate" value="2015-11-24">
+        <div id="left">
+            <b>Что ищем?</b>
+
+            <div class="container">
+                <input type="date" name="searchDate" id="searchDate" value="2015-11-24">
+
+            </div>
+
+            <div class="container">
+                <input type="text" id='searchText' onkeyup="createHelpListForPS(event)" autocomplete="off"   onmousedown='this.style.border = "1px solid #cccccc"' onclick='event.cancelBubble ? event.cancelBubble = true : event.stopPropagation();' value="Енюково"/>
+                <ul id='selectList' onclick="selectHelp(event)"></ul>
+            </div>
+
+            <div class="container">
+
+            </div>
+
+            <div class="container">
+
+            </div>
+
+            <div class="container">
+
+            </div>
             <input type="button" onclick="sendSearchRequest()" id="sendSearchRequest" name="sendSearchRequest"  value="Поиск" />
+
         </div>
-        <div id="searchResult">
+
+        <div id="right">
+            <div id="searchResult">
+            </div>
         </div>
+
     </body>
 </html>
 

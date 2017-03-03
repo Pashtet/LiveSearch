@@ -52,36 +52,37 @@ public class LiveSearch extends HttpServlet {
         Statement st = null;
         ResultSet res = null;
         String finalSearch = "";
-            try {
-                conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/files", "netbeans", "netbeans");
-                st = conn.createStatement();
+        try {
+            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/files", "netbeans", "netbeans");
+            st = conn.createStatement();
 
-                String s = "SELECT * FROM ps WHERE ps_name ILIKE 'ПС_" + searchText + "%';";
+            String s = "SELECT * FROM ps WHERE ps_name ILIKE '" + searchText + "%';";
 
-                res = st.executeQuery(s);
-                finalSearch += "[\"";
-                while (res.next()) {
-                    System.out.println(finalSearch);
-                    if (finalSearch.length() > 2) {
-                        finalSearch += " \", \"";
-                    }
-                    String un = res.getString("ps_name");
-                    System.out.println(un);
-                    if (un.length() > 0) {
-                        un = un.substring(3);
-                        finalSearch += un;
-                    }
-                    System.out.println(finalSearch);
-                    
+            res = st.executeQuery(s);
+            finalSearch += "[\"";
+            while (res.next()) {
+                System.out.println(finalSearch);
+                if (finalSearch.length() > 2) {
+                    finalSearch += " \", \"";
                 }
-                finalSearch += "\"]";
-                st.close();
-                conn.close();
-            } catch (SQLException sqlEx) {
-                sqlEx.printStackTrace();
-            }
+                String un = res.getString("ps_name");
+                System.out.println(un);
+//                    if (un.length() > 0) {
+//                        un = un.substring(3);
+//                        finalSearch += un;
+//                    }
+                finalSearch += un;
+                System.out.println(finalSearch);
 
-            return finalSearch;
+            }
+            finalSearch += "\"]";
+            st.close();
+            conn.close();
+        } catch (SQLException sqlEx) {
+            sqlEx.printStackTrace();
+        }
+
+        return finalSearch;
     }
 
 }
