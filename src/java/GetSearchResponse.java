@@ -56,12 +56,11 @@ public class GetSearchResponse extends HttpServlet {
         ResultSet res = null;
         String finalSearch = "";
 
-        String s = "SELECT ps.ps_name, mf.mf_name, event.event_date, event.dev_name, event.file_name "
-                + "FROM ps, mf, event "
-                + "WHERE ps.ps_name ILIKE 'ПС_" + searchText + "%' "
-                + "AND event.event_date='" + searchDate + "' "
-                + "AND ps.ps_id=mf.ps_id "
-                + "AND mf.mf_id=event.mf_id "
+        String s = "SELECT ps_name, mf_name, unit_name, device_name, osc_name, osc_date  "
+                + "FROM ps, mf, unit, device, osc "
+                + "WHERE ps_name='" + searchText + "' "
+                + "AND osc_date='" + searchDate + "' "
+                + "AND unit.ps_id = ps.ps_id AND device.unit_id = unit.unit_id AND device.mf_id=mf.mf_id AND osc.device_id = device.device_id"
                 + ";";
         
         res = st.executeQuery(s);
@@ -78,6 +77,8 @@ public class GetSearchResponse extends HttpServlet {
             finalSearch += "\"" + res.getString(4) + "\"";
             finalSearch += ",";
             finalSearch += "\"" + res.getString(5) + "\"";
+            finalSearch += ",";
+            finalSearch += "\"" + res.getString(6) + "\"";
             finalSearch += "],";
         }
         finalSearch = finalSearch.substring(0, (finalSearch.length()-1));
