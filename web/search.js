@@ -99,19 +99,21 @@
         //console.log("Обработчик клика по кнопке \"Поиск\"!");
         var searchText = document.getElementById("searchText"),
                 searchDate = document.getElementById("searchDate");
-        if (searchText.value.length > 5)
-            isSearchTextOk = true;
-        if (isSearchTextOk) {
+        
+        if (searchText.value.length > 0) {
+            console.log(searchText.value.length);
             $.post("GetSearchResponse", {'searchText': searchText.value, 'searchDate': searchDate.value}, function (data) {
                 console.log("Данные с сервера: \n");
                 console.log(data);
                 data = JSON.parse(data);
                 if (data.length != undefined && data.length > 0) {
                     console.log("Данные получены!");
+                    
                 }
 ///////////строим таблицу
                 var divTable = document.getElementById("searchResult"),
                         table = document.createElement("table");
+                        divTable.innerHTML = "";
                 table.setAttribute("border", "1");
                 var row, cell;
                 for (var i = 0; i < data.length; i++) {
@@ -126,6 +128,7 @@
                 divTable.appendChild(table);
             });
         } else {
+            document.getElementById("searchResult").innerHTML = "";
             alert("Введите данные для поиска!");
         }
 

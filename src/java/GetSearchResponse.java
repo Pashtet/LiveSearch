@@ -82,7 +82,9 @@ public class GetSearchResponse extends HttpServlet {
             finalSearch += "],";
         }
         finalSearch = finalSearch.substring(0, (finalSearch.length()-1));
+        if(finalSearch.length()>5)
         finalSearch += "]";
+        else finalSearch = "[]";
         st.close();
         conn.close();
         return finalSearch;
