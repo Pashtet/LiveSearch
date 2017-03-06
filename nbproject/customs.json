@@ -3,6 +3,9 @@
     "attributes": {
         "autocomplite": {
             "context": "input"
+        },
+        "download": {
+            "context": "a"
         }
     }
 }

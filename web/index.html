@@ -9,7 +9,7 @@
         <script type="text/javascript" src="search.js"></script>
     </head>
 
-    <body onclick='document.getElementById("selectList").style.display = "none"'>
+    <body onclick='document.getElementById("selectListForPS").style.display = "none"'>
         <div id="left">
             <b>Что ищем?</b>
 
@@ -19,29 +19,32 @@
             </div>
 
             <div class="container">
-                <input type="text" id='searchText' onkeyup="createHelpListForPS(event)" autocomplete="off"   onmousedown='this.style.border = "1px solid #cccccc"' onclick='event.cancelBubble ? event.cancelBubble = true : event.stopPropagation();' value="Енюково"/>
-                <ul id='selectList' onclick="selectHelp(event)"></ul>
+                <input type="text" id='searchTextForPS' onchange="document.getElementById(searchTextForPS)" onkeyup="createHelpListForPS(event)" autocomplete="off"   onmousedown='this.style.border = "1px solid #cccccc"' onclick='event.cancelBubble ? event.cancelBubble = true : event.stopPropagation();' value="Енюково"/>
+                <ul id='selectListForPS' onclick="selectHelp(event)"></ul>
             </div>
 
             <div class="container">
-
+                <input type="text" id='searchTextForMF' disabled autocomplete="off" onclick='event.cancelBubble ? event.cancelBubble = true : event.stopPropagation();' value="ABB" />
             </div>
 
             <div class="container">
-
+                <input type="text" id='searchTextForUnit'  disabled autocomplete="off"    value="Присоединение"/>
             </div>
 
             <div class="container">
-
+                <input type="text" id='searchTextForDevice' disabled autocomplete="off"   value="Устройство"/>
             </div>
             <input type="button" onclick="sendSearchRequest()" id="sendSearchRequest" name="sendSearchRequest"  value="Поиск" />
+            <a href="D:\OSC\ПС_Енюково\ABB_Енюково\2014\10\22\VV_10_T2_AA2L1Q02A1\020E0039_2014_10_22_17_47_5_923 01.DAT" download>11111</a>
 
         </div>
 
         <div id="right">
             <div id="searchResult">
             </div>
+             
         </div>
+       
 
     </body>
 </html>

@@ -38,7 +38,7 @@ and open the template in the editor.
     font: 17px Times New Roman;
     width: 200px;
 }
-#selectList{
+#selectListForPS{
     display: none;
     list-style-type: none;
     border: 1px solid #cccccc;
@@ -51,16 +51,16 @@ and open the template in the editor.
     border-radius: 2px;
     width: 200px;
 }
-#selectList li{
+#selectListForPS li{
     border-top: 1px dotted #cccccc;
     height: 25px;
     font: 17px Times New Roman;
 }
-#selectList li:hover{
+#selectListForPS li:hover{
     cursor: pointer;
     background: #fef6d7 !important;
 }
-#selectList li:first-child{
+#selectListForPS li:first-child{
     border: none;
 }
 #searchResult table{

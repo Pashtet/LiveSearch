@@ -38,7 +38,7 @@ public class GetSearchResponse extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String searchText = request.getParameter("searchText");
+            String searchText = request.getParameter("searchTextForPS");
             searchText = new String(searchText.getBytes("ISO-8859-1"), "UTF-8");
             String searchDate = request.getParameter("searchDate");
             searchDate = new String(searchDate.getBytes("ISO-8859-1"), "UTF-8");

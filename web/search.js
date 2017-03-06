@@ -11,9 +11,12 @@ var numActiveItem = 0,
         countItemsListHelp = 0;
 var datag;
 
-
+function createHelpListForMF(event){
+    
+}
 
 function createHelpListForPS(event) {
+    
     var event = event || window.event;
     var key = event.keyCode || event.charCode;
     var target = event.target || event.srcElement;
@@ -23,7 +26,7 @@ function createHelpListForPS(event) {
     // Нажат Enter
     if (key == 13)
     {
-        document.getElementById("selectList").style.display = 'none';
+        document.getElementById("selectListForPS").style.display = 'none';
     }
 
     /* Перебор подсказок */
@@ -39,16 +42,16 @@ function createHelpListForPS(event) {
         else if (numActiveItem < 1)
             numActiveItem = countItemsListHelp;
         //пройтись по всем элементам и выделить внешне выбранный и подставить его значение в поле ввода
-        for (i = 0; i < document.getElementById('selectList').childNodes.length; i++)
+        for (i = 0; i < document.getElementById('selectListForPS').childNodes.length; i++)
         {
-            if (document.getElementById('selectList').childNodes[i].nodeType == 1)
+            if (document.getElementById('selectListForPS').childNodes[i].nodeType == 1)
             {
                 counter++;
-                document.getElementById('selectList').childNodes[i].style.background = '#ffffff';
+                document.getElementById('selectListForPS').childNodes[i].style.background = '#ffffff';
                 if (counter == numActiveItem)
                 {
-                    document.getElementById('selectList').childNodes[i].style.background = '#fdedaf';
-                    document.getElementById('searchText').value = document.getElementById('selectList').childNodes[i].getElementsByTagName('span')[0].innerHTML;
+                    document.getElementById('selectListForPS').childNodes[i].style.background = '#fdedaf';
+                    document.getElementById('searchTextForPS').value = document.getElementById('selectListForPS').childNodes[i].getElementsByTagName('span')[0].innerHTML;
                 }
             }
         }
@@ -58,13 +61,13 @@ function createHelpListForPS(event) {
     else if (len_key_words && key != 37 && key != 39)//если не нажат ентер и число подсказок 0 и введен хоть один символ и не нажата клавиша влево или вправоч  
     {
         //console.log(target.value);
-        $.post("LiveSearch", {'searchText': target.value}, function (data) {
+        $.post("LiveSearch", {'searchTextForPS': target.value}, function (data) {
 
             console.log("Зашли в разбор данных с сервера!");
             console.log(data);
             datag = JSON.parse(data); //json data array string
             numActiveItem = 0;
-            document.getElementById('selectList').style.display = 'none';
+            document.getElementById('selectListForPS').style.display = 'none';
             code = '';
             for (i = 0; i < datag.length; i++)
                 if (reg.exec(datag[i].substr(0, len_key_words)) != null)//хитрое сравнение со строками в массиве
@@ -76,15 +79,15 @@ function createHelpListForPS(event) {
             if (counter)
             {
                 countItemsListHelp = counter;
-                document.getElementById('selectList').innerHTML = code;
-                document.getElementById('selectList').style.display = 'block';
+                document.getElementById('selectListForPS').innerHTML = code;
+                document.getElementById('selectListForPS').style.display = 'block';
             }
         });
     }
     /* Если поле пустое - скрываем*/
     else if (!len_key_words)
     {
-        document.getElementById('selectList').style.display = 'none';
+        document.getElementById('selectListForPS').style.display = 'none';
     }
 
 }
@@ -92,19 +95,19 @@ function createHelpListForPS(event) {
 function selectHelp(ev) {
     var event = ev || window.event;
     var target = event.target || event.srcElement;
-    document.getElementById('searchText').value = target.getElementsByTagName('span')[0].innerHTML;
-    document.getElementById('selectList').style.display = 'none';
+    document.getElementById('searchTextForPS').value = target.getElementsByTagName('span')[0].innerHTML;
+    document.getElementById('selectListForPS').style.display = 'none';
 }
 
 function sendSearchRequest() {
 
     //console.log("Обработчик клика по кнопке \"Поиск\"!");
-    var searchText = document.getElementById("searchText"),
+    var searchTextForPS = document.getElementById("searchTextForPS"),
             searchDate = document.getElementById("searchDate");
 
-    if (searchText.value.length > 0) {
-        console.log(searchText.value.length);
-        $.post("GetSearchResponse", {'searchText': searchText.value, 'searchDate': searchDate.value}, function (data) {
+    if (searchTextForPS.value.length > 0) {
+        console.log(searchTextForPS.value.length);
+        $.post("GetSearchResponse", {'searchTextForPS': searchTextForPS.value, 'searchDate': searchDate.value}, function (data) {
             console.log("Данные с сервера: \n");
             console.log(data);
             data = JSON.parse(data);

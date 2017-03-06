@@ -34,7 +34,7 @@ public class LiveSearch extends HttpServlet {
             HttpServletResponse response) throws ServletException, IOException {
 
         try {
-            String searchText = request.getParameter("searchText");
+            String searchText = request.getParameter("searchTextForPS");
             searchText = new String(searchText.getBytes("ISO-8859-1"), "UTF-8");
             String report = getLiveSearch(searchText);
             response.setContentType("text/plain;charset=utf-8");
