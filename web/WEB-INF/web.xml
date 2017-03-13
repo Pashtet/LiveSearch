@@ -9,6 +9,10 @@
         <servlet-name>GetSearchResponse</servlet-name>
         <servlet-class>GetSearchResponse</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DownloadFile</servlet-name>
+        <servlet-class>DownloadFile</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LiveSearch</servlet-name>
         <url-pattern>/LiveSearch</url-pattern>
@@ -16,6 +20,10 @@
     <servlet-mapping>
         <servlet-name>GetSearchResponse</servlet-name>
         <url-pattern>/GetSearchResponse</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DownloadFile</servlet-name>
+        <url-pattern>/DownloadFile</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>

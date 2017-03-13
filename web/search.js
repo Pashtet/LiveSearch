@@ -11,12 +11,12 @@ var numActiveItem = 0,
         countItemsListHelp = 0;
 var datag;
 
-function createHelpListForMF(event){
-    
+function createHelpListForMF(event) {
+
 }
 
 function createHelpListForPS(event) {
-    
+
     var event = event || window.event;
     var key = event.keyCode || event.charCode;
     var target = event.target || event.srcElement;
@@ -106,10 +106,11 @@ function sendSearchRequest() {
             searchDate = document.getElementById("searchDate");
 
     if (searchTextForPS.value.length > 0) {
-        console.log(searchTextForPS.value.length);
+        console.log(searchTextForPS.value);
+        console.log(searchDate.value);
         $.post("GetSearchResponse", {'searchTextForPS': searchTextForPS.value, 'searchDate': searchDate.value}, function (data) {
-            console.log("Данные с сервера: \n");
-            console.log(data);
+            //console.log("Данные с сервера: \n");
+            //console.log(data);
             data = JSON.parse(data);
             if (data.length != undefined && data.length > 0) {
                 console.log("Данные получены!");
@@ -120,15 +121,24 @@ function sendSearchRequest() {
                     table = document.createElement("table");
             divTable.innerHTML = "";
             table.setAttribute("border", "1");
+            table.id = "tableForSearchResponse";
             var row, cell;
             for (var i = 0; i < data.length; i++) {
                 //console.log("Row: " + i);
                 row = table.insertRow(i);
-                for (var j = 0; j < data[i].length; j++) {
+                for (var j = 0; j < data[i].length - 1; j++) {
                     cell = row.insertCell(j);
                     cell.innerHTML = data[i][j];
                     //console.log("Column: " + j + "\nДанные: " + data[i][j]);
                 }
+                cell = row.insertCell(data[i].length - 1);
+                var link = document.createElement("a");
+                var linkString = data[i][data[i].length - 1].toString();
+                linkString = linkString.substring(18);
+               // console.log(linkString);
+                link.href = linkString;
+                link.innerHTML = "Скачать";
+                cell.appendChild(link);
             }
             divTable.appendChild(table);
         });
@@ -139,5 +149,28 @@ function sendSearchRequest() {
 
 }
 
+
+function downloadFile(ev) {
+    var nameFile;
+    var event = event || window.event;
+    var target = event.target || event.srcElement;
+    var i1 = target.parentElement.parentElement.rowIndex;
+    var j1 = target.parentElement.cellIndex;
+    console.log("Row - " + i1);
+    console.log("Ячейка - " + j1);
+
+    var table = document.getElementById("tableForSearchResponse");
+    var rowCount = table.getElementsByTagName("tr").length;
+    var row = table.getElementsByTagName("tr").item(i1);
+    var cellsCount = row.getElementsByTagName("td").length;
+    var cell = row.getElementsByTagName("td").item(j1 - 2);
+
+    nameFile = cell.innerHTML;
+    console.log(nameFile);
+    $.post("DownloadFile", {'searchNameFile': nameFile}, function (data) {
+        console.log("Файл: " + data);
+        window.open(data, '_blank')
+    });
+}
 
 

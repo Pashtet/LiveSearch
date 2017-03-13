@@ -53,7 +53,7 @@ public class LiveSearch extends HttpServlet {
         ResultSet res = null;
         String finalSearch = "";
         try {
-            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/files", "netbeans", "netbeans");
+            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/rza", "netbeans", "netbeans");
             st = conn.createStatement();
 
             String s = "SELECT * FROM ps WHERE ps_name ILIKE '" + searchText + "%';";
