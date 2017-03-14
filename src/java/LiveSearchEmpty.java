@@ -44,7 +44,7 @@ public class LiveSearchEmpty extends HttpServlet {
         Statement st = conn.createStatement();
         ResultSet res = null;
         String finalSearch = "";
-        String s = "SELECT ps_name FROM ps;";
+        String s = "SELECT ps_name FROM ps ORDER BY ps_name;";
         res = st.executeQuery(s);
         JsonArrayBuilder arrb2 = Json.createArrayBuilder();
 

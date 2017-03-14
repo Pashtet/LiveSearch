@@ -28,6 +28,7 @@ function createHelpListForPS(event) {
         document.getElementById('selectListForPS').style.display = 'none';
         document.getElementById("selectListForPS").innerHTML = "";
         countItemsListHelp = 0;
+        $("#searchResult").html("");
         
         //document.getElementById("selectListForPS").innerHTML = '';
         //countItemsListHelp = 0;
@@ -44,7 +45,7 @@ function createHelpListForPS(event) {
             numActiveItem = 0;
             //document.getElementById('selectListForPS').style.display = 'none';
             code = '';
-            for (i = 1; i < datag.length; i++) {
+            for (i = 0; i < datag.length; i++) {
                 counter++;
                 code += "<li><span  style='display: none;'>" + datag[i] + "</span><span style='color: #b4b3b3'>" + datag[i] + "</span></li>";
             }
@@ -130,6 +131,7 @@ function selectHelpForPS() {
 }
 
 function clickOnsearchTextForPS() {
+    
     var event = event || window.event;
     var key = event.keyCode || event.charCode;
     var target = event.target || event.srcElement;
@@ -146,13 +148,14 @@ function clickOnsearchTextForPS() {
             numActiveItem = 0;
             //document.getElementById('selectListForPS').style.display = 'none';
             code = '';
-            for (i = 1; i < datag.length; i++) {
+            for (i = 0; i < datag.length; i++) {
                 counter++;
                 code += "<li><span  style='display: none;'>" + datag[i] + "</span><span style='color: #b4b3b3'>" + datag[i] + "</span></li>";
             }
             countItemsListHelp = counter;
             document.getElementById('selectListForPS').innerHTML = code;
             document.getElementById('selectListForPS').style.display = 'block';
+            $("#searchResult").html("");
         });
     }
 }
@@ -189,7 +192,7 @@ function sendSearchRequest() {
                     cell = row.insertCell(data[i].length - 1);
                     var link = document.createElement("a");
                     var linkString = data[i][data[i].length - 1].toString();
-                    linkString = linkString.substring(3);
+                    linkString = linkString.substring(18);
                     // console.log(linkString);
                     link.href = linkString;
                     link.innerHTML = "Скачать";
