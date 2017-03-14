@@ -11,10 +11,6 @@ var numActiveItem = 0,
         countItemsListHelp = 0;
 var datag;
 
-function createHelpListForMF(event) {
-
-}
-
 function createHelpListForPS(event) {
 
     var event = event || window.event;
@@ -134,7 +130,7 @@ function sendSearchRequest() {
                 cell = row.insertCell(data[i].length - 1);
                 var link = document.createElement("a");
                 var linkString = data[i][data[i].length - 1].toString();
-                linkString = linkString.substring(18);
+                linkString = linkString.substring(3);
                // console.log(linkString);
                 link.href = linkString;
                 link.innerHTML = "Скачать";
@@ -147,30 +143,6 @@ function sendSearchRequest() {
         alert("Введите данные для поиска!");
     }
 
-}
-
-
-function downloadFile(ev) {
-    var nameFile;
-    var event = event || window.event;
-    var target = event.target || event.srcElement;
-    var i1 = target.parentElement.parentElement.rowIndex;
-    var j1 = target.parentElement.cellIndex;
-    console.log("Row - " + i1);
-    console.log("Ячейка - " + j1);
-
-    var table = document.getElementById("tableForSearchResponse");
-    var rowCount = table.getElementsByTagName("tr").length;
-    var row = table.getElementsByTagName("tr").item(i1);
-    var cellsCount = row.getElementsByTagName("td").length;
-    var cell = row.getElementsByTagName("td").item(j1 - 2);
-
-    nameFile = cell.innerHTML;
-    console.log(nameFile);
-    $.post("DownloadFile", {'searchNameFile': nameFile}, function (data) {
-        console.log("Файл: " + data);
-        window.open(data, '_blank')
-    });
 }
 
 
