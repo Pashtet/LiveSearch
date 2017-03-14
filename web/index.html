@@ -2,7 +2,6 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="style.css"/>
         <title>Поиск по осциллограммам!</title>
         <link rel="stylesheet" href="css/style.css">
         <script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
@@ -14,8 +13,8 @@
         <h1>Поиск по осциллограммам</h1>
         <div>
 
-            <input class="searchInput" type="text" id='searchTextForPS' onkeyup="createHelpListForPS(event)" autocomplete="off"   onclick="clickOnsearchTextForPS()" onmousedown='this.style.border = "1px solid #cccccc"'  value="Енюково"/>
-            <ul id='selectListForPS' onclick="selectHelpForPS()"></ul>
+            <input class="searchInput" type="text" id='searchTextForPS' onkeyup="createHelpListForPS(event)" autocomplete="off"   onclick="createHelpListForPS(event)" onmousedown='this.style.border = "1px solid #cccccc"'  value="Енюково"/>
+            <ul id='selectListForPS' onclick="selectHelpForPS(event)"></ul>
 
             <input class="searchInput" type="text" id='searchTextForMF' disabled autocomplete="off" onkeyup="createHelpListForMF(event)" onclick="clickOnsearchTextForMF()" onmousedown='this.style.border = "1px solid #cccccc"' value="ABB" />
 
