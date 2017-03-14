@@ -30,14 +30,16 @@ and open the template in the editor.
 }
 #searchDate{
     border: 1px solid #cccccc;
-    font: 17px Times New Roman;
+    font: 15px Times New Roman;
     width: 200px;
 }
-#searchText{
+.searchInput{
+    position:relative;
     border: 1px solid #cccccc;
-    font: 17px Times New Roman;
+    font: 20px Times New Roman;
     width: 200px;
 }
+
 #selectListForPS{
     display: none;
     list-style-type: none;

@@ -13,6 +13,10 @@
         <servlet-name>DownloadFile</servlet-name>
         <servlet-class>DownloadFile</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LiveSearchEmpty</servlet-name>
+        <servlet-class>LiveSearchEmpty</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LiveSearch</servlet-name>
         <url-pattern>/LiveSearch</url-pattern>
@@ -24,6 +28,10 @@
     <servlet-mapping>
         <servlet-name>DownloadFile</servlet-name>
         <url-pattern>/DownloadFile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LiveSearchEmpty</servlet-name>
+        <url-pattern>/LiveSearchEmpty</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>

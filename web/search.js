@@ -20,15 +20,43 @@ function createHelpListForPS(event) {
     var reg = new RegExp("^" + target.value + ".*$", "i");
     counter = 0;
     // Нажат Enter
+    document.getElementById("searchTextForMF").disabled = true;
     if (key == 13)
     {
-        document.getElementById("selectListForPS").style.display = 'none';
+        //selectHelpForPS();
+        // document.getElementById("selectListForPS").style.display = 'none';
+        document.getElementById('selectListForPS').style.display = 'none';
+        document.getElementById("selectListForPS").innerHTML = "";
+        countItemsListHelp = 0;
+        
+        //document.getElementById("selectListForPS").innerHTML = '';
+        //countItemsListHelp = 0;
+    } else if (key == 40 && !len_key_words && countItemsListHelp == 0) {
+        //document.getElementById('selectListForPS').innerHTML = "";
+        //numActiveItem=0;
+        // document.getElementById("selectListForPS").style.display = 'block';
+        console.log("Пустой запрос");
+        $.post("LiveSearchEmpty", function (data) {
+
+            console.log("Зашли в разбор данных с сервера!");
+            console.log(data);
+            datag = JSON.parse(data); //json data array string
+            numActiveItem = 0;
+            //document.getElementById('selectListForPS').style.display = 'none';
+            code = '';
+            for (i = 1; i < datag.length; i++) {
+                counter++;
+                code += "<li><span  style='display: none;'>" + datag[i] + "</span><span style='color: #b4b3b3'>" + datag[i] + "</span></li>";
+            }
+            countItemsListHelp = counter;
+            document.getElementById('selectListForPS').innerHTML = code;
+            document.getElementById('selectListForPS').style.display = 'block';
+        });
     }
-
     /* Перебор подсказок */
-    else if (key == 40 || key == 38 && countItemsListHelp != 0)//если нажаты клавиши вниз/вверх и число найденных подсказок не 0
+    else if (key == 40 || key == 38 && countItemsListHelp != 0)//если нажаты клавиши вниз/вверх и найдены подсказки
     {
-
+        document.getElementById("selectListForPS").style.display = 'block';
         if (key == 40)
             numActiveItem++;
         else
@@ -48,6 +76,7 @@ function createHelpListForPS(event) {
                 {
                     document.getElementById('selectListForPS').childNodes[i].style.background = '#fdedaf';
                     document.getElementById('searchTextForPS').value = document.getElementById('selectListForPS').childNodes[i].getElementsByTagName('span')[0].innerHTML;
+                    document.getElementById("searchTextForMF").disabled = false;
                 }
             }
         }
@@ -56,6 +85,7 @@ function createHelpListForPS(event) {
     /* Поиск и вывод подсказок */
     else if (len_key_words && key != 37 && key != 39)//если не нажат ентер и число подсказок 0 и введен хоть один символ и не нажата клавиша влево или вправоч  
     {
+        // document.getElementById("selectListForPS").style.display = 'block';
         //console.log(target.value);
         $.post("LiveSearch", {'searchTextForPS': target.value}, function (data) {
 
@@ -84,15 +114,47 @@ function createHelpListForPS(event) {
     else if (!len_key_words)
     {
         document.getElementById('selectListForPS').style.display = 'none';
+        document.getElementById('selectListForPS').innerHTML = "";
+        countItemsListHelp = 0;
+        
     }
 
 }
 
-function selectHelp(ev) {
-    var event = ev || window.event;
-    var target = event.target || event.srcElement;
-    document.getElementById('searchTextForPS').value = target.getElementsByTagName('span')[0].innerHTML;
+function selectHelpForPS() {
+    document.getElementById('searchTextForPS').value = document.getElementById('selectListForPS').getElementsByTagName('span')[0].innerHTML;
     document.getElementById('selectListForPS').style.display = 'none';
+    document.getElementById("selectListForPS").innerHTML = "";
+    countItemsListHelp = 0;
+    document.getElementById("searchTextForMF").disabled = false;
+}
+
+function clickOnsearchTextForPS() {
+    var event = event || window.event;
+    var key = event.keyCode || event.charCode;
+    var target = event.target || event.srcElement;
+    var len_key_words = target.value.length;
+    var reg = new RegExp("^" + target.value + ".*$", "i");
+    counter = 0;
+    if (!len_key_words && countItemsListHelp == 0) {
+        console.log("Пустой запрос");
+        $.post("LiveSearchEmpty", function (data) {
+
+            console.log("Зашли в разбор данных с сервера!");
+            console.log(data);
+            datag = JSON.parse(data); //json data array string
+            numActiveItem = 0;
+            //document.getElementById('selectListForPS').style.display = 'none';
+            code = '';
+            for (i = 1; i < datag.length; i++) {
+                counter++;
+                code += "<li><span  style='display: none;'>" + datag[i] + "</span><span style='color: #b4b3b3'>" + datag[i] + "</span></li>";
+            }
+            countItemsListHelp = counter;
+            document.getElementById('selectListForPS').innerHTML = code;
+            document.getElementById('selectListForPS').style.display = 'block';
+        });
+    }
 }
 
 function sendSearchRequest() {
@@ -110,33 +172,35 @@ function sendSearchRequest() {
             data = JSON.parse(data);
             if (data.length != undefined && data.length > 0) {
                 console.log("Данные получены!");
-
+                var divTable = document.getElementById("searchResult"),
+                        table = document.createElement("table");
+                divTable.innerHTML = "";
+                table.setAttribute("border", "1");
+                table.id = "tableForSearchResponse";
+                var row, cell;
+                for (var i = 0; i < data.length; i++) {
+                    //console.log("Row: " + i);
+                    row = table.insertRow(i);
+                    for (var j = 0; j < data[i].length - 1; j++) {
+                        cell = row.insertCell(j);
+                        cell.innerHTML = data[i][j];
+                        //console.log("Column: " + j + "\nДанные: " + data[i][j]);
+                    }
+                    cell = row.insertCell(data[i].length - 1);
+                    var link = document.createElement("a");
+                    var linkString = data[i][data[i].length - 1].toString();
+                    linkString = linkString.substring(3);
+                    // console.log(linkString);
+                    link.href = linkString;
+                    link.innerHTML = "Скачать";
+                    cell.appendChild(link);
+                }
+                divTable.appendChild(table);
+            } else {
+                document.getElementById("searchResult").innerHTML = "<p> Данные не найдены!</p>";
             }
 ///////////строим таблицу
-            var divTable = document.getElementById("searchResult"),
-                    table = document.createElement("table");
-            divTable.innerHTML = "";
-            table.setAttribute("border", "1");
-            table.id = "tableForSearchResponse";
-            var row, cell;
-            for (var i = 0; i < data.length; i++) {
-                //console.log("Row: " + i);
-                row = table.insertRow(i);
-                for (var j = 0; j < data[i].length - 1; j++) {
-                    cell = row.insertCell(j);
-                    cell.innerHTML = data[i][j];
-                    //console.log("Column: " + j + "\nДанные: " + data[i][j]);
-                }
-                cell = row.insertCell(data[i].length - 1);
-                var link = document.createElement("a");
-                var linkString = data[i][data[i].length - 1].toString();
-                linkString = linkString.substring(3);
-               // console.log(linkString);
-                link.href = linkString;
-                link.innerHTML = "Скачать";
-                cell.appendChild(link);
-            }
-            divTable.appendChild(table);
+
         });
     } else {
         document.getElementById("searchResult").innerHTML = "";

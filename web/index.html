@@ -9,40 +9,30 @@
         <script type="text/javascript" src="search.js"></script>
     </head>
 
-    <body onclick='$("#selectListForPS").css("display","none")'>
-        <div id="left">
-            <b>Что ищем?</b>
+    <body onclick='$("#selectListForPS").css("display", "none")'>
+        <h1>Поиск по осциллограммам</h1>
+        <div>
+                       
+            <input class="searchInput" type="text" id='searchTextForPS' onkeyup="createHelpListForPS(event)" autocomplete="off"   onclick="clickOnsearchTextForPS()" onmousedown='this.style.border = "1px solid #cccccc"'  value="Енюково"/>
+            <ul id='selectListForPS' onclick="selectHelp()"></ul>
 
-            <div class="container">
-                <input type="date" name="searchDate" id="searchDate" value="2015-11-24">
-            </div>
+            <input class="searchInput" type="text" id='searchTextForMF' disabled autocomplete="off" onclick="clickOnsearchTextForMF()" onmousedown='this.style.border = "1px solid #cccccc"' value="ABB" />
 
-            <div class="container">
-                <input type="text" id='searchTextForPS' onchange="document.getElementById(searchTextForPS)" onkeyup="createHelpListForPS(event)" autocomplete="off"   onmousedown='this.style.border = "1px solid #cccccc"' onclick='event.cancelBubble ? event.cancelBubble = true : event.stopPropagation();' value="Енюково"/>
-                <ul id='selectListForPS' onclick="selectHelp(event)"></ul>
-            </div>
+            <input class="searchInput" type="text" id='searchTextForUnit'  disabled autocomplete="off"    value="Присоединение"/>
 
-            <div class="container">
-                <input type="text" id='searchTextForMF' disabled autocomplete="off" onclick='event.cancelBubble ? event.cancelBubble = true : event.stopPropagation();' value="ABB" />
-            </div>
-
-            <div class="container">
-                <input type="text" id='searchTextForUnit'  disabled autocomplete="off"    value="Присоединение"/>
-            </div>
-
-            <div class="container">
-                <input type="text" id='searchTextForDevice' disabled autocomplete="off"   value="Устройство"/>
-            </div>
-            <input type="button" onclick="sendSearchRequest()" id="sendSearchRequest" name="sendSearchRequest"  value="Поиск" />
-            <a href="/LiveSearch/OSC/ПС_Енюково/ABB_Енюково/2016/4/14/VV_10_T2_AA2L1Q02A1/020E0107_2016_4_14_18_46_38_391 01.CFG" download>1111</a>
+            <input class="searchInput" type="text" id='searchTextForDevice' disabled autocomplete="off"   value="Устройство"/>
+            <input  type="date" name="searchDate" id="searchDate" value="2015-11-24"> 
+            <input class="searchInput" type="button" onclick="sendSearchRequest()" id="sendSearchRequest" name="sendSearchRequest"  value="Поиск" />
+            <input class="searchInput" type="button" onclick='$("#searchResult").html("")' value="Очистить"/>
+            <!--<a href="/LiveSearch/OSC/ПС_Енюково/ABB_Енюково/2016/4/14/VV_10_T2_AA2L1Q02A1/020E0107_2016_4_14_18_46_38_391 01.CFG" download>1111</a>-->
         </div>
 
-        <div id="right">
+        <div>
             <div id="searchResult">
             </div>
-             
+
         </div>
-       
+
 
     </body>
 </html>
