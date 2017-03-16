@@ -7,7 +7,7 @@ var isPS = isMF = isUnit = isDevice = false;
 
 window.onload = function () {
 ///////запрос на список подстанций
-    $.post("LiveSearchEmpty", function (data) {
+    $.post("SelectPS", function (data) {
         data = JSON.parse(data); //json data array string
         var code = '';
         for (i = 0; i < data.length; i++) {
