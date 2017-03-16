@@ -10,12 +10,12 @@
         <servlet-class>GetSearchResponse</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>DownloadFile</servlet-name>
-        <servlet-class>DownloadFile</servlet-class>
+        <servlet-name>SelectMF</servlet-name>
+        <servlet-class>SelectMF</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>LiveSearchEmpty</servlet-name>
-        <servlet-class>LiveSearchEmpty</servlet-class>
+        <servlet-name>SelectDate</servlet-name>
+        <servlet-class>SelectDate</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LiveSearch</servlet-name>
@@ -26,12 +26,12 @@
         <url-pattern>/GetSearchResponse</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>DownloadFile</servlet-name>
-        <url-pattern>/DownloadFile</url-pattern>
+        <servlet-name>SelectMF</servlet-name>
+        <url-pattern>/SelectMF</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>LiveSearchEmpty</servlet-name>
-        <url-pattern>/LiveSearchEmpty</url-pattern>
+        <servlet-name>SelectDate</servlet-name>
+        <url-pattern>/SelectDate</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>

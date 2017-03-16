@@ -23,5 +23,36 @@
                 <root id="test.src.dir" name="Тесты"/>
             </test-roots>
         </data>
+        <libraries xmlns="http://www.netbeans.org/ns/cdnjs-libraries/1">
+            <library name="jquery" version="3.1.1">
+                <file localPath="web/js/libs/jquery/core.js" path="core.js"/>
+                <file localPath="web/js/libs/jquery/jquery.js" path="jquery.js"/>
+                <file localPath="web/js/libs/jquery/jquery.min.js" path="jquery.min.js"/>
+                <file localPath="web/js/libs/jquery/jquery.min.map" path="jquery.min.map"/>
+                <file localPath="web/js/libs/jquery/jquery.slim.js" path="jquery.slim.js"/>
+                <file localPath="web/js/libs/jquery/jquery.slim.min.js" path="jquery.slim.min.js"/>
+                <file localPath="web/js/libs/jquery/jquery.slim.min.map" path="jquery.slim.min.map"/>
+            </library>
+            <library name="twitter-bootstrap" version="4.0.0-alpha">
+                <file localPath="web/js/libs/twitter-bootstrap/css/bootstrap.css" path="css/bootstrap.css"/>
+                <file localPath="web/js/libs/twitter-bootstrap/css/bootstrap.css.map" path="css/bootstrap.css.map"/>
+                <file localPath="web/js/libs/twitter-bootstrap/css/bootstrap.min.css" path="css/bootstrap.min.css"/>
+                <file localPath="web/js/libs/twitter-bootstrap/css/bootstrap.min.css.map" path="css/bootstrap.min.css.map"/>
+                <file localPath="web/js/libs/twitter-bootstrap/js/bootstrap.js" path="js/bootstrap.js"/>
+                <file localPath="web/js/libs/twitter-bootstrap/js/bootstrap.min.js" path="js/bootstrap.min.js"/>
+                <file localPath="web/js/libs/twitter-bootstrap/js/npm.js" path="js/npm.js"/>
+                <file localPath="web/js/libs/twitter-bootstrap/js/umd/alert.js" path="js/umd/alert.js"/>
+                <file localPath="web/js/libs/twitter-bootstrap/js/umd/button.js" path="js/umd/button.js"/>
+                <file localPath="web/js/libs/twitter-bootstrap/js/umd/carousel.js" path="js/umd/carousel.js"/>
+                <file localPath="web/js/libs/twitter-bootstrap/js/umd/collapse.js" path="js/umd/collapse.js"/>
+                <file localPath="web/js/libs/twitter-bootstrap/js/umd/dropdown.js" path="js/umd/dropdown.js"/>
+                <file localPath="web/js/libs/twitter-bootstrap/js/umd/modal.js" path="js/umd/modal.js"/>
+                <file localPath="web/js/libs/twitter-bootstrap/js/umd/popover.js" path="js/umd/popover.js"/>
+                <file localPath="web/js/libs/twitter-bootstrap/js/umd/scrollspy.js" path="js/umd/scrollspy.js"/>
+                <file localPath="web/js/libs/twitter-bootstrap/js/umd/tab.js" path="js/umd/tab.js"/>
+                <file localPath="web/js/libs/twitter-bootstrap/js/umd/tooltip.js" path="js/umd/tooltip.js"/>
+                <file localPath="web/js/libs/twitter-bootstrap/js/umd/util.js" path="js/umd/util.js"/>
+            </library>
+        </libraries>
     </configuration>
 </project>

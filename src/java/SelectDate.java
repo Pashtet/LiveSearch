@@ -13,6 +13,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Pashtet
  */
-public class DownloadFile extends HttpServlet {
+public class SelectDate extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,38 +39,40 @@ public class DownloadFile extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            String searchNameFile = request.getParameter("searchNameFile");
-            searchNameFile = new String(searchNameFile.getBytes("ISO-8859-1"), "UTF-8");
-            String report = doRequestToDb(searchNameFile);
-            System.out.println(report);
-            out.println("" + report + "");
-        }
-    }
-
-     private String doRequestToDb(String searchNameFile) throws SQLException {
+            String PS  = new String(request.getParameter("PS").getBytes("ISO-8859-1"), "UTF-8");
+            String MF = new String(request.getParameter("MF").getBytes("ISO-8859-1"), "UTF-8");
+            
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/rza", "netbeans", "netbeans");
         Statement st = conn.createStatement();
         ResultSet res = null;
         String finalSearch = "";
-
-        String s = "SELECT full_path  "
-                + "FROM osc, file "
-                + "WHERE osc_name='" + searchNameFile + "' "
-                + "AND osc.file_id = file.file_id"
-                + ";";
-
+        String s = "SELECT DISTINCT osc_date "
+                + "FROM ps, unit, device, mf, osc "
+                + "WHERE ps.ps_name = '" + PS + "' "
+                + "AND mf.mf_name = '" + MF + "' "
+                + "AND unit.ps_id=ps.ps_id AND unit.unit_id = device.unit_id AND device.mf_id = mf.mf_id AND osc.device_id=device.device_id "
+                + "ORDER BY osc_date;";
         res = st.executeQuery(s);
+        JsonArrayBuilder arrb2 = Json.createArrayBuilder();
 
         while (res.next()) {
-            finalSearch = res.getString(1);
+            JsonArrayBuilder arrb1 = Json.createArrayBuilder();
+                arrb1.add(res.getString(1));
+            
+            JsonArray jarr1 = arrb1.build();
+            arrb2.add(jarr1);
+
         }
+        JsonArray jarr2 = arrb2.build();
+        finalSearch = jarr2.toString();
+        System.out.println("Поиск даты \n" + finalSearch);
         st.close();
         conn.close();
-        return finalSearch;
+        try (PrintWriter out = response.getWriter()) {
+            out.println(finalSearch);
+        }
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -83,7 +88,7 @@ public class DownloadFile extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(DownloadFile.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SelectMF.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -101,7 +106,7 @@ public class DownloadFile extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(DownloadFile.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SelectMF.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

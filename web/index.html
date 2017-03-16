@@ -7,26 +7,26 @@
         <script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
         <script type="text/javascript" src="js/searchForPS.js"></script>
         <script type="text/javascript" src="js/searchForMF.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
     </head>
 
-    <body onclick='$("#selectListForPS").css("display", "none")'>
+    <body>
         <h1>Поиск по осциллограммам</h1>
+        
         <div>
-
-            <input class="searchInput" type="text" id='searchTextForPS' onkeyup="createHelpListForPS(event)" autocomplete="off"   onclick="createHelpListForPS(event)" onmousedown='this.style.border = "1px solid #cccccc"'  value="Енюково"/>
-            <ul id='selectListForPS' onclick="selectHelpForPS(event)"></ul>
-
-            <input class="searchInput" type="text" id='searchTextForMF' disabled autocomplete="off" onkeyup="createHelpListForMF(event)" onclick="clickOnsearchTextForMF()" onmousedown='this.style.border = "1px solid #cccccc"' value="ABB" />
-
-            <input class="searchInput" type="text" id='searchTextForUnit'  disabled autocomplete="off"    value="Присоединение"/>
-
-            <input class="searchInput" type="text" id='searchTextForDevice' disabled autocomplete="off"   value="Устройство"/>
-            <input  type="date" name="searchDate" id="searchDate" value="2015-11-24"> 
-            <input class="searchInput" type="button" onclick="sendSearchRequest()" id="sendSearchRequest" name="sendSearchRequest"  value="Поиск" />
-            <input class="searchInput" type="button" onclick='$("#searchResult").html("")' value="Очистить"/>
-            <!--<a href="/LiveSearch/OSC/ПС_Енюково/ABB_Енюково/2016/4/14/VV_10_T2_AA2L1Q02A1/020E0107_2016_4_14_18_46_38_391 01.CFG" download>1111</a>-->
+            <label for="PS">Подстанция</label>
+            <input type="text" name="PS" id="PS" list="PSList">
+            <datalist id="PSList"></datalist>
+            
+            <label for="MF">Производитель</label>
+            <input type="text" name="MF" id="MF" list="MFList">
+            <datalist id="MFList"></datalist>
+            <label for="searchDate">Дата события</label>
+            <input type="date" name="searchDate" id="searchDate" list="dateList"> 
+            <datalist id="dateList"></datalist>
+            <input  type="button" onclick="sendSearchRequest()" id="sendSearchRequest" name="sendSearchRequest"  value="Поиск" />
+            <input  type="button" onclick='$("#searchResult").html("")' value="Очистить"/>
         </div>
-
         <div>
             <div id="searchResult">
             </div>

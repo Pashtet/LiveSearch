@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Pashtet
  */
-public class LiveSearchEmpty extends HttpServlet {
+public class SelectMF extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,12 +39,18 @@ public class LiveSearchEmpty extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        
+        String PS = request.getParameter("PS");
+            PS = new String(PS.getBytes("ISO-8859-1"), "UTF-8");
+            
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/rza", "netbeans", "netbeans");
         Statement st = conn.createStatement();
         ResultSet res = null;
         String finalSearch = "";
-        String s = "SELECT ps_name FROM ps ORDER BY ps_name;";
+        String s = "SELECT DISTINCT mf_name "
+                + "FROM ps, unit, device, mf "
+                + "WHERE ps.ps_name = '"+PS+"' "
+                + "AND unit.ps_id=ps.ps_id AND unit.unit_id = device.unit_id AND device.mf_id = mf.mf_id "
+                + "ORDER BY mf_name;";
         res = st.executeQuery(s);
         JsonArrayBuilder arrb2 = Json.createArrayBuilder();
 
@@ -58,14 +64,11 @@ public class LiveSearchEmpty extends HttpServlet {
         }
         JsonArray jarr2 = arrb2.build();
         finalSearch = jarr2.toString();
-        System.out.println("2 \n" + finalSearch);
+        System.out.println("Поиск производителя \n" + finalSearch);
         st.close();
         conn.close();
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            
-            //out.println(searchText + " " + searchDate);
-            out.println("" + finalSearch + "");
+            out.println(finalSearch);
         }
     }
 
@@ -84,7 +87,7 @@ public class LiveSearchEmpty extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(LiveSearchEmpty.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SelectMF.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -102,7 +105,7 @@ public class LiveSearchEmpty extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(LiveSearchEmpty.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SelectMF.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

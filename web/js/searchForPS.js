@@ -230,45 +230,6 @@ function selectHelpForPS(event) {
     $("#searchTextForMF").removeAttr("disabled");
 }
 
-function sendSearchRequest() {
 
-    var searchTextForPS = $("#searchTextForPS"),
-            searchDate = $("#searchDate");
-
-    if (searchTextForPS.value.length > 0) {
-        $.post("GetSearchResponse", {'searchTextForPS': searchTextForPS.value, 'searchDate': searchDate.value}, function (data) {
-            data = JSON.parse(data);
-            if (data.length != undefined && data.length > 0) {
-                var divTable = document.getElementById("searchResult"),
-                        table = document.createElement("table");
-                divTable.innerHTML = "";
-                table.setAttribute("border", "1");
-                table.id = "tableForSearchResponse";
-                var row, cell;
-                for (var i = 0; i < data.length; i++) {
-                    row = table.insertRow(i);
-                    for (var j = 0; j < data[i].length - 1; j++) {
-                        cell = row.insertCell(j);
-                        cell.innerHTML = data[i][j];
-                    }
-                    cell = row.insertCell(data[i].length - 1);
-                    var link = document.createElement("a");
-                    var linkString = data[i][data[i].length - 1].toString();
-                    linkString = linkString.substring(3);
-                    link.href = linkString;
-                    link.innerHTML = "Скачать";
-                    cell.appendChild(link);
-                }
-                divTable.appendChild(table);
-            } else {
-                document.getElementById("searchResult").innerHTML = "<p> Данные не найдены!</p>";
-            }
-        });
-    } else {
-        document.getElementById("searchResult").innerHTML = "";
-        alert("Введите данные для поиска!");
-    }
-
-}
 
 
