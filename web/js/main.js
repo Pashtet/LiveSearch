@@ -64,6 +64,7 @@ window.onload = function () {
                 });
             }
             if (this.id=="searchDate"){
+                document.getElementById("searchResult").innerHTML = "";
                 sendSearchRequest();
             }
 
@@ -87,13 +88,24 @@ window.onload = function () {
     }
 }
 
+function clearFields(){
+    console.log("ClearFields")
+    document.getElementById("PS").value = "";
+    document.getElementById("MF").value = "";
+    document.getElementById("searchDate").value = "";
+    document.getElementById("searchResult").innerHTML = "";
+    
+}
+
 function sendSearchRequest() {
 
-    var searchTextForPS = document.getElementById("PS");//$("#PS"),
+    var searchTextForPS = document.getElementById("PS"),//$("#PS"),
+    searchTextForMF = document.getElementById("MF"),
     searchDate = document.getElementById("searchDate");//$("#searchDate");
+    
 
     if (searchTextForPS.value.length > 0) {
-        $.post("GetSearchResponse", {'searchTextForPS': searchTextForPS.value, 'searchDate': searchDate.value}, function (data) {
+        $.post("GetSearchResponse", {'searchTextForPS': searchTextForPS.value, 'searchTextForMF':searchTextForMF.value, 'searchDate': searchDate.value}, function (data) {
             data = JSON.parse(data);
             if (data.length != undefined && data.length > 0) {
                 var divTable = document.getElementById("searchResult"),

@@ -39,11 +39,13 @@ public class GetSearchResponse extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String searchText = request.getParameter("searchTextForPS");
-            searchText = new String(searchText.getBytes("ISO-8859-1"), "UTF-8");
+            String searchTextForPS = request.getParameter("searchTextForPS");
+            searchTextForPS = new String(searchTextForPS.getBytes("ISO-8859-1"), "UTF-8");
+            String searchTextForMF = request.getParameter("searchTextForMF");
+            searchTextForMF = new String(searchTextForMF.getBytes("ISO-8859-1"), "UTF-8");
             String searchDate = request.getParameter("searchDate");
             searchDate = new String(searchDate.getBytes("ISO-8859-1"), "UTF-8");
-            String report = doRequestToDb(searchText, searchDate);
+            String report = doRequestToDb(searchTextForPS,searchTextForMF, searchDate);
             //out.println(searchText + " " + searchDate);
             out.println("" + report + "");
 
@@ -51,21 +53,22 @@ public class GetSearchResponse extends HttpServlet {
 
     }
 
-    private String doRequestToDb(String searchText, String searchDate) throws SQLException {
+    private String doRequestToDb(String searchText, String searchTextForMF,String searchDate) throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/rza", "netbeans", "netbeans");
         Statement st = conn.createStatement();
         ResultSet res = null;
         String finalSearch = "";
-        System.out.println("Запрос: \nПодстанция: " + searchText + "\nДата: " +searchDate);
-        String s = "SELECT unit_name, device_name, osc_name, osc_date, file_full_path  "
+        System.out.println("Запрос: \nПодстанция: " + searchText + "\nПроизводитель: " + searchTextForMF + "\nДата: " +searchDate);
+        String s = "SELECT unit_name, device_name, file_name, osc_date, file_full_path "
                 + "FROM ps, mf, unit, device, osc, file "
                 + "WHERE ps_name = '" + searchText + "' "
+                + "AND mf_name = '" + searchTextForMF + "' "
                 + "AND osc_date = '" + searchDate + "' "
                 + "AND unit.ps_id = ps.ps_id "
                 + "AND device.mf_id = mf.mf_id "
                 + "AND device.unit_id = unit.unit_id "
                 + "AND osc.device_id = device.device_id "
-                + "AND osc.file_id=file.file_id"
+                + "AND osc.osc_id=file.osc_id"
                 + ";";
 
         res = st.executeQuery(s);
