@@ -7,66 +7,60 @@ and open the template in the editor.
     Created on : Feb 4, 2017, 11:28:00 PM
     Author     : Pashtet
 */
-*{
-    padding : 0px;
-    margin : 0;
-}
-#left{
-    position: absolute;
-    left : 0;
-    top : 0;
-    width : 20%;
-}
-#right{
-    position: absolute;
-    right : 0;
-    top : 0;
-    width : 80%;
-}
-#left div{
-    border: 0px solid red;
-    position: relative;
+
+html{
+
     width: 100%;
-}
-#searchDate{
-    border: 1px solid #cccccc;
-    font: 15px Times New Roman;
-    width: 200px;
-}
-.searchInput{
-    position:relative;
-    border: 1px solid #cccccc;
-    font: 20px Times New Roman;
-    width: 200px;
+    height: 100%;
 }
 
-#selectListForPS{
-    display: none;
-    list-style-type: none;
-    border: 1px solid #cccccc;
-    padding: 0px;
-    margin: 0px;
+body{
+
+    width: 100%;
+    height: 100%;
+}
+
+.wrapper{
+    min-height: 100%;
+    overflow: hidden;
     position: relative;
-    top: 0px;
-    left: 0px;
-    box-shadow: 0 0 3px #cccccc;
-    border-radius: 2px;
-    width: 200px;
 }
-#selectListForPS li{
-    border-top: 1px dotted #cccccc;
-    height: 25px;
-    font: 17px Times New Roman;
+
+.sidebar{
+    float:left;
+    width:15%;
 }
-#selectListForPS li:hover{
-    cursor: pointer;
-    background: #fef6d7 !important;
+.search_item{
+    position:relative;
+    width:100%;
+    text-align: center;
 }
-#selectListForPS li:first-child{
-    border: none;
+.search_item label{
+    
+    vertical-align:middle; 
 }
+.search_button{
+    position:relative;
+    width:100%;
+    text-align: center;
+}
+.content{
+    float:left;
+    width:85%;
+}
+
+main {
+
+}
+
+aside{
+
+}
+
 #searchResult table{
     position: relative;
     right: 0;
     width: 100%;
 }
+
+

@@ -59,7 +59,7 @@ public class GetSearchResponse extends HttpServlet {
         ResultSet res = null;
         String finalSearch = "";
         System.out.println("Запрос: \nПодстанция: " + searchText + "\nПроизводитель: " + searchTextForMF + "\nДата: " +searchDate);
-        String s = "SELECT unit_name, device_name, file_name, osc_date, file_full_path "
+        String s = "SELECT unit_name, device_name, osc_name, file_name, osc_date, file_full_path "
                 + "FROM ps, mf, unit, device, osc, file "
                 + "WHERE ps_name = '" + searchText + "' "
                 + "AND mf_name = '" + searchTextForMF + "' "
@@ -78,7 +78,7 @@ public class GetSearchResponse extends HttpServlet {
 
         while (res.next()) {
             JsonArrayBuilder arrb1 = Json.createArrayBuilder();
-            for (int i = 1; i <= 5; i++) {
+            for (int i = 1; i <= 6; i++) {
                 arrb1.add(res.getString(i));
             }
             

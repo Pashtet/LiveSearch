@@ -5,35 +5,44 @@
         <title>Поиск по осциллограммам!</title>
         <link rel="stylesheet" href="css/style.css">
         <script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
-        <script type="text/javascript" src="js/searchForPS.js"></script>
-        <script type="text/javascript" src="js/searchForMF.js"></script>
         <script type="text/javascript" src="js/main.js"></script>
     </head>
 
     <body>
-        <h1>Поиск по осциллограммам</h1>
-        
-        <div>
-            <label for="PS">Подстанция</label>
-            <input type="text" name="PS" id="PS" list="PSList">
-            <datalist id="PSList"></datalist>
-            
-            <label for="MF">Производитель</label>
-            <input type="text" name="MF" id="MF" list="MFList">
-            <datalist id="MFList"></datalist>
-            <label for="searchDate">Дата события</label>
-            <input type="date" name="searchDate" id="searchDate" list="dateList"> 
-            <datalist id="dateList"></datalist>
-            <input  type="button" onclick="sendSearchRequest()" id="sendSearchRequest" name="sendSearchRequest"  value="Поиск" />
-            <input  type="button" onclick="clearFields()" value="Очистить"/>
+
+        <div class="wrapper">
+            <section class="content-wrapper">
+                <div class="container">
+                    <aside class="sidebar">
+                        <div class="search_item">
+                            <label for="PS">Подстанция</label>
+                            <input name="PS" id="PS" list="PSList">
+                            <datalist id="PSList"></datalist>
+                        </div>
+                        <div class="search_item">
+                            <label for="MF">Производитель</label>
+                            <input name="MF" id="MF" list="MFList">
+                            <datalist id="MFList"></datalist>
+                        </div>
+                        <div class="search_item">
+                            <label for="searchDate">Дата события</label>
+                            <input type="date" name="searchDate" id="searchDate" list="dateList"> 
+                            <datalist id="dateList"></datalist>
+                        </div>
+                        <div class="search_button">
+                            <input  class="button_send_request" type="button" onclick="sendSearchRequest()" id="sendSearchRequest" name="sendSearchRequest"  value="Поиск" />
+                            <input  class="button_clear" type="button" onclick="clearFields()" value="Очистить"/>
+                        </div>
+                    </aside>
+
+                    <main class="content">
+                        <div id="searchResult">
+                        </div>
+                    </main>
+                    
+                </div>
+            </section>
         </div>
-        <div>
-            <div id="searchResult">
-            </div>
-
-        </div>
-
-
     </body>
 </html>
 

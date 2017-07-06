@@ -63,6 +63,7 @@ window.onload = function () {
 
                 });
             }
+            
             if (this.id=="searchDate"){
                 document.getElementById("searchResult").innerHTML = "";
                 sendSearchRequest();
@@ -89,11 +90,14 @@ window.onload = function () {
 }
 
 function clearFields(){
+    
     console.log("ClearFields")
     document.getElementById("PS").value = "";
     document.getElementById("MF").value = "";
     document.getElementById("searchDate").value = "";
-    document.getElementById("searchResult").innerHTML = "";
+    document.getElementById("searchResult").innerHTML = " ";
+    document.getElementById("MFList").innerHTML = " ";
+    document.getElementById("dateList").innerHTML="";
     
 }
 
@@ -123,7 +127,7 @@ function sendSearchRequest() {
                     cell = row.insertCell(data[i].length - 1);
                     var link = document.createElement("a");
                     var linkString = data[i][data[i].length - 1].toString();
-                    linkString = linkString.substring(3);
+                    linkString = linkString = linkString.substring(3);
                     link.href = linkString;
                     link.innerHTML = "Скачать";
                     cell.appendChild(link);
