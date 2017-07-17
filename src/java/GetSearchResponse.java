@@ -4,8 +4,11 @@
  * and open the template in the editor.
  */
 
-import java.io.IOException;
-import java.io.PrintWriter;
+//import java.io.IOException;
+//import java.io.PrintWriter;
+import java.io.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -36,6 +39,7 @@ public class GetSearchResponse extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
+        
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -45,7 +49,7 @@ public class GetSearchResponse extends HttpServlet {
             searchTextForMF = new String(searchTextForMF.getBytes("ISO-8859-1"), "UTF-8");
             String searchDate = request.getParameter("searchDate");
             searchDate = new String(searchDate.getBytes("ISO-8859-1"), "UTF-8");
-            String report = doRequestToDb(searchTextForPS,searchTextForMF, searchDate);
+            String report = doRequestToDb(searchTextForPS, searchTextForMF, searchDate);
             //out.println(searchText + " " + searchDate);
             out.println("" + report + "");
 
@@ -53,13 +57,13 @@ public class GetSearchResponse extends HttpServlet {
 
     }
 
-    private String doRequestToDb(String searchText, String searchTextForMF,String searchDate) throws SQLException {
+    private String doRequestToDb(String searchText, String searchTextForMF, String searchDate) throws SQLException, IOException {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/rza", "netbeans", "netbeans");
         Statement st = conn.createStatement();
         ResultSet res = null;
         String finalSearch = "";
-        System.out.println("Запрос: \nПодстанция: " + searchText + "\nПроизводитель: " + searchTextForMF + "\nДата: " +searchDate);
-        String s = "SELECT unit_name, device_name, osc_name, file_name, osc_date, file_full_path "
+        System.out.println("Запрос: \nПодстанция: " + searchText + "\nПроизводитель: " + searchTextForMF + "\nДата: " + searchDate);
+        String s = "SELECT unit_name, device_name, osc_name, osc_date, file_full_path "
                 + "FROM ps, mf, unit, device, osc, file "
                 + "WHERE ps_name = '" + searchText + "' "
                 + "AND mf_name = '" + searchTextForMF + "' "
@@ -73,26 +77,57 @@ public class GetSearchResponse extends HttpServlet {
 
         res = st.executeQuery(s);
 
-        
         JsonArrayBuilder arrb2 = Json.createArrayBuilder();
-
+        JsonArrayBuilder arrb3 = Json.createArrayBuilder();
         while (res.next()) {
             JsonArrayBuilder arrb1 = Json.createArrayBuilder();
-            for (int i = 1; i <= 6; i++) {
-                arrb1.add(res.getString(i));
+            for (int i = 1; i <= 5; i++) {
+                String t = res.getString(i);
+                arrb1.add(t);
+                if(i==5){
+                    arrb3.add(t);
+                }
             }
-            
+
             JsonArray jarr1 = arrb1.build();
             System.out.println("1 \n" + jarr1.toString());
             arrb2.add(jarr1);
 
         }
         JsonArray jarr2 = arrb2.build();
+        
         finalSearch = jarr2.toString();
         System.out.println("2 \n" + finalSearch);
         st.close();
         conn.close();
+        doZip(arrb3.build());
         return finalSearch;
+    }
+    
+    public void doZip(JsonArray ja) throws FileNotFoundException, IOException{
+        File f = new File("D:\\Temp\\osc.zip");
+        System.out.println(f.getAbsolutePath());
+        f.delete();
+        ZipOutputStream out = new ZipOutputStream(new FileOutputStream("D:\\Temp\\osc.zip"));
+        for(JsonValue jv : ja){
+            File f1 = new File(jv.toString());
+            out.putNextEntry(new ZipEntry(f1.getName()));
+            writeToZip(new FileInputStream(f1), out);
+        }
+        out.close();
+        
+    }
+    public void writeToZip(InputStream in, OutputStream out ) throws FileNotFoundException, IOException{
+        
+        
+        
+        byte[] buffer = new byte[1024];
+        int len;
+        while((len = in.read(buffer)) >= 0){
+            out.write(buffer,0,len);
+        }
+        in.close();
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

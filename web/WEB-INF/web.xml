@@ -17,6 +17,10 @@
         <servlet-name>SelectPS</servlet-name>
         <servlet-class>SelectPS</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>downloadAllFiles</servlet-name>
+        <servlet-class>DownloadAllFiles</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GetSearchResponse</servlet-name>
         <url-pattern>/GetSearchResponse</url-pattern>
@@ -32,6 +36,10 @@
     <servlet-mapping>
         <servlet-name>SelectPS</servlet-name>
         <url-pattern>/SelectPS</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>downloadAllFiles</servlet-name>
+        <url-pattern>/downloadAllFiles</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>

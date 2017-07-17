@@ -8,4 +8,5 @@
     </property>
   </jsp-config>
      <property name="alternatedocroot_1" value="from=/OSC/* dir=D:\"/>
+     <property name="alternatedocroot_1" value="from=/Temp/* dir=D:\"/>
 </glassfish-web-app>

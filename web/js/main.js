@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 var isPS = isMF = isUnit = isDevice = false;
+var listFiles = "";
 
 window.onload = function () {
 ///////запрос на список подстанций
@@ -106,11 +107,12 @@ function sendSearchRequest() {
     var searchTextForPS = document.getElementById("PS"),//$("#PS"),
     searchTextForMF = document.getElementById("MF"),
     searchDate = document.getElementById("searchDate");//$("#searchDate");
-    
+    listFiles="";
 
     if (searchTextForPS.value.length > 0) {
         $.post("GetSearchResponse", {'searchTextForPS': searchTextForPS.value, 'searchTextForMF':searchTextForMF.value, 'searchDate': searchDate.value}, function (data) {
             data = JSON.parse(data);
+            console.log(data);
             if (data.length != undefined && data.length > 0) {
                 var divTable = document.getElementById("searchResult"),
                         table = document.createElement("table");
@@ -127,12 +129,17 @@ function sendSearchRequest() {
                     cell = row.insertCell(data[i].length - 1);
                     var link = document.createElement("a");
                     var linkString = data[i][data[i].length - 1].toString();
-                    linkString = linkString = linkString.substring(3);
+                    linkString = linkString.substring(3);
+                    //linkFiles
                     link.href = linkString;
                     link.innerHTML = "Скачать";
                     cell.appendChild(link);
                 }
+                var link = document.createElement("a");
+                link.href="\Temp\\osc.zip";
+                link.innerHTML="Скачать все"
                 divTable.appendChild(table);
+                divTable.appendChild(link);
             } else {
                 document.getElementById("searchResult").innerHTML = "<p> Данные не найдены!</p>";
             }
@@ -142,5 +149,9 @@ function sendSearchRequest() {
         alert("Введите данные для поиска!");
     }
 
+}
+
+function downloadAllFiles(){
+    
 }
 
