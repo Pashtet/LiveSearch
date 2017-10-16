@@ -3,13 +3,44 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Поиск по осциллограммам!</title>
+<<<<<<< HEAD
         <link rel="stylesheet" href="css/style.css">
         <script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
         <script type="text/javascript" src="js/main.js"></script>
+=======
+        <style type="text/css">
+
+            .AutoComplete {
+                position: relative;
+                width: 200px;
+            }
+            .AutoComplete > * {
+                width: 100%;
+            }
+            .AutoComplete > ul {
+                background: #FFF;
+                border-radius: 10px;
+                box-shadow: 0 0 10px #000;
+                display: none;
+                margin: 5px 0 0 0;
+                padding: 5px 0;
+                position: absolute;
+            }
+            .AutoComplete li {
+                display: block;
+                padding: 0 5px;
+            }
+            .AutoComplete li:hover {
+                background: #AAA;
+                cursor: pointer;
+            }
+        </style>
+>>>>>>> origin/master
     </head>
 
     <body>
 
+<<<<<<< HEAD
         <div class="wrapper">
             <section class="content-wrapper">
                 <div class="container">
@@ -34,7 +65,17 @@
                             <input  class="button_clear" type="button" onclick="clearFields()" value="Очистить"/>
                         </div>
                     </aside>
+=======
+            <div id="searchAdviceWrapper"></div>
+            <div id="searchReport"></div>
+        </form>
+        <div class="AutoComplete">
+            <input type="text" />
+            <ul></ul>
+        </div>
+>>>>>>> origin/master
 
+<<<<<<< HEAD
                     <main class="content">
                         <div id="searchResult">
                         </div>
@@ -43,6 +84,65 @@
                 </div>
             </section>
         </div>
+=======
+        <script type="text/javascript" src="jquery-1.4.4.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#searchText").keyup(function () {//при опускании клавиши
+                    if ($(this).val().length >= 2) { //если длина строки больше 2
+                        $.post("SearchServlet", {'searchText': $(this).val()}, function (data) {
+                            data = JSON.parse(data); //json data array string
+                            //alert(data);
+                            if (data.length != undefined && data.length > 0) {
+                                $("#searchAdviceWrapper").html('');
+                                for (i in data) {
+                                    $("#searchAdviceWrapper").append('<div class="adviceVariant">' + data[i] + '</div>');
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+            $('.adviceVariant').live('click', function () {
+                $('#searchText').val($(this).text());
+            });
+        </script>
+
+        <script type="text/javascript">
+            window.onload = function () {
+                var data = ['Арбуз', 'Арба', 'Арбалет', 'Апельсин', 'Ананас', 'Банан', 'Виноград', 'Вишня'],
+                        input = document.querySelector('.AutoComplete > input'),
+                        list = input.nextElementSibling;
+                input['oninput' in input ? 'oninput' : 'onpropertychange'] = function () {
+                    var li,
+                            val = this.value.toLowerCase()
+                            .split(' ')
+                            .pop();
+                    if (val.length < 3)
+                        list.style.display = 'none';
+                    else {
+                        list.innerHTML = '';
+                        data.forEach(function (i) {
+                            var reg = new RegExp('^' + val, 'i');
+                            if (reg.test(i)) {
+                                li = document.createElement('li');
+                                li.appendChild(document.createTextNode(i))
+                                li.onclick = function () {
+                                    input.value = input.value.replace(/\S+$/, i);
+                                    input.focus();
+                                    list.innerHTML = '';
+                                    list.style.display = 'none';
+                                };
+                                list.appendChild(li);
+                                list.style.display = 'block'
+                            }
+                        });
+                    }
+                }
+            }
+        </script>
+
+>>>>>>> origin/master
     </body>
 </html>
 
