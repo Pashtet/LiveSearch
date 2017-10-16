@@ -58,7 +58,9 @@ public class GetSearchResponse extends HttpServlet {
     }
 
     private String doRequestToDb(String searchText, String searchTextForMF, String searchDate) throws SQLException, IOException {
-        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/rza", "netbeans", "netbeans");
+        
+        boolean isEmpty=true;
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/rza_test", "netbeans", "netbeans");
         Statement st = conn.createStatement();
         ResultSet res = null;
         String finalSearch = "";
@@ -77,30 +79,32 @@ public class GetSearchResponse extends HttpServlet {
 
         res = st.executeQuery(s);
 
-        JsonArrayBuilder arrb2 = Json.createArrayBuilder();
-        JsonArrayBuilder arrb3 = Json.createArrayBuilder();
+        JsonArrayBuilder arrbForResponse = Json.createArrayBuilder();
+        JsonArrayBuilder arrbForZip = Json.createArrayBuilder();
+        
         while (res.next()) {
-            JsonArrayBuilder arrb1 = Json.createArrayBuilder();
+            JsonArrayBuilder arrbTemp = Json.createArrayBuilder();
             for (int i = 1; i <= 5; i++) {
                 String t = res.getString(i);
-                arrb1.add(t);
-                if(i==5){
-                    arrb3.add(t);
-                }
+                arrbTemp.add(t);
+                if(i==5 && !t.isEmpty())
+                    arrbForZip.add(t);
+                else isEmpty=true;
             }
 
-            JsonArray jarr1 = arrb1.build();
+            JsonArray jarr1 = arrbTemp.build();
             System.out.println("1 \n" + jarr1.toString());
-            arrb2.add(jarr1);
+            arrbForResponse.add(jarr1);
 
         }
-        JsonArray jarr2 = arrb2.build();
+        JsonArray jarr2 = arrbForResponse.build();
         
         finalSearch = jarr2.toString();
         System.out.println("2 \n" + finalSearch);
         st.close();
         conn.close();
-        doZip(arrb3.build());
+        if(!isEmpty)
+        doZip(arrbForZip.build());
         return finalSearch;
     }
     
@@ -117,9 +121,8 @@ public class GetSearchResponse extends HttpServlet {
         out.close();
         
     }
+    
     public void writeToZip(InputStream in, OutputStream out ) throws FileNotFoundException, IOException{
-        
-        
         
         byte[] buffer = new byte[1024];
         int len;
