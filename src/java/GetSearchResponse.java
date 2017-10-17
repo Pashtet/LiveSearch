@@ -60,7 +60,7 @@ public class GetSearchResponse extends HttpServlet {
     private String doRequestToDb(String searchText, String searchTextForMF, String searchDate) throws SQLException, IOException {
         
         boolean isEmpty=true;
-        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/rza_test", "netbeans", "netbeans");
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/rza", "netbeans", "netbeans");
         Statement st = conn.createStatement();
         ResultSet res = null;
         String finalSearch = "";
